@@ -1,0 +1,37 @@
+doctype html
+html
+  head
+    title My Rails Application
+    meta[name='viewport' content='width=device-width,initial-scale=1']
+    meta[name='apple-mobile-web-app-capable' content='yes']
+    meta[name='mobile-web-app-capable' content='yes']
+
+    = csrf_meta_tags
+    = csp_meta_tag
+    = yield :head
+
+    link[rel='icon' href='/icon.png' type='image/png']
+    link[rel='icon' href='/icon.svg' type='image/svg+xml']
+    link[rel='apple-touch-icon' href='/icon.png']
+
+    = stylesheet_link_tag :application, "data-turbo-track": "reload"
+    = javascript_include_tag "application", "data-turbo-track": "reload",
+    type: "module"
+  body
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+      .container-fluid
+        = link_to "Bulletin Board", root_path, class: "navbar-brand"
+        #navbarNav.collapse.navbar-collapse
+          ul.navbar-nav
+            li.nav-item
+              = link_to "Home", root_path, class: "nav-link"
+            li.nav-item
+              = link_to "About", about_path, class: "nav-link"
+    main.container.mt-4
+      = yield
+    footer.bg-light.py-3.mt-5
+      .container
+        p.text-center.text-muted
+          | ©
+          = Time.now.year
+          |  My Rails Application
