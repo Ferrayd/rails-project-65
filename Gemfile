@@ -10,9 +10,9 @@ gem "sqlite3", ">= 1.4"
 gem "puma", ">= 5.0"
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem "jsbundling-rails"
-# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+# Hotwire"s SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
-# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+# Hotwire"s modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
 gem "cssbundling-rails"
@@ -33,6 +33,10 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 gem "rollbar", "~> 3.6.0"
+gem "omniauth-github"
+gem "omniauth-rails_csrf_protection"
+gem "slim-rails", "~> 3.6.3"
+gem "faker"
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
@@ -40,12 +44,11 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
   gem "brakeman", require: false
   gem "rubocop-rails-omakase", require: false
-  gem "faker"
   gem "minitest-power_assert"
   gem "rubocop", require: false
   gem "rubocop-rails", require: false
   gem "slim_lint"
-  gem 'slim-rails', '~> 3.6.3'
+  gem "dotenv-rails"
 end
 
 group :development do

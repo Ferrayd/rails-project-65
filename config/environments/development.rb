@@ -80,5 +80,5 @@ Rails.application.configure do
   # config.generators.apply_rubocop_autocorrect_after_generate!
   config.generators do |g|
     g.template_engine :slim
-  end  
+  end
 end
