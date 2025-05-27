@@ -1,20 +1,22 @@
-nav.navbar.navbar-expand-lg.navbar-light.bg-light
-  .container-fluid
-    = link_to "Bulletin Board", root_path, class: "navbar-brand"
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+  .container
+    = link_to "Доска объявлений", root_path, class: "navbar-brand"
+
+    button.navbar-toggler type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      span.navbar-toggler-icon
+
     #navbarNav.collapse.navbar-collapse
-      ul.navbar-nav
+      ul.navbar-nav.me-auto
         li.nav-item
-          = link_to "Home", root_path, class: "nav-link"
-        li.nav-item
-          = link_to "About", about_path, class: "nav-link"
-        li.nav-item
-          = link_to "Home", root_path, class: "nav-link"
-        li.nav-item
-          = link_to "About", about_path, class: "nav-link"
-        ul.navbar-nav
-          - if current_user
-            li.nav-item
-              = link_to "Sign Out", sign_out_path, class: "nav-link"
-          - else
-            li.nav-item
-              = link_to "Sign In with GitHub", "/auth/github", class: "nav-link"
+          = link_to "Все объявления", root_path, class: "nav-link"
+
+
+      ul.navbar-nav.ms-auto
+        - if signed_in?
+          li.nav-item
+            = link_to "Новое объявление", new_web_bulletin_path, class: "nav-link"
+          li.nav-item
+            = link_to "Выйти", web_sign_out_path, method: :delete, class: "nav-link"
+        - else
+          li.nav-item
+            = link_to "Войти", web_sign_in_path, class: "nav-link"

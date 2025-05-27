@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+bmw:
+  title: BMW 3 Series
+  description: Отличное состояние
+  image: bmw.jpg
+  user: one
+  category: cars
+
+apartment:
+  title: Квартира в центре
+  description: Просторная, светлая
+  image: apartment.jpg
+  user: one
+  category: real_estate

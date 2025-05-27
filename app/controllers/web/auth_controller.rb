@@ -1,20 +1,23 @@
-class Web::AuthController < ApplicationController
-  def request
-    redirect_to "/auth/#{params[:provider]}"
-  end
+# frozen_string_literal: true
 
-  def callback
-    auth = request.env["omniauth.auth"]
+module Web
+  class AuthController < ApplicationController
+    def callback
+      return redirect_to root_path, notice: t(".already_signed_in") if signed_in?
 
-    user = User.find_or_initialize_by(provider: auth["provider"], uid: auth["uid"])
-    user.email = auth["info"]["email"]&.downcase
-    user.name  = auth["info"]["name"]
-    user.save!
+      user_info = request.env["omniauth.auth"]
+      email, name = user_info[:info].values_at(:email, :name)
 
-    session[:user_id] = user.id
-    redirect_to root_path, notice: "Successfully signed in!"
-  rescue StandardError => e
-    Rails.logger.error("OAuth callback error: #{e.message}")
-    redirect_to root_path, alert: "Failed to sign in"
+      user = User.find_or_initialize_by(email: email.downcase)
+      user.update(name:)
+
+      sign_in user
+      redirect_to root_path, notice: t(".signed_in")
+    end
+
+    def logout
+      sign_out
+      redirect_to root_path, notice: t(".signed_out")
+    end
   end
 end

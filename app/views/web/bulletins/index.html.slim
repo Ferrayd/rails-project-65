@@ -1,0 +1,17 @@
+.container.mt-5
+  .row.mb-4
+    .col-md-12
+      h1 Объявления
+
+  .row.row-cols-1.row-cols-md-3.g-4
+    - @bulletins.each do |bulletin|
+      .col
+        .card.h-100.shadow-sm
+          - if bulletin.image.attached?
+            = image_tag bulletin.image.variant(resize_to_limit: [400, 250]), class: "card-img-top", alt: bulletin.title
+          .card-body
+            h5.card-title = bulletin.title
+            p.card-text.text-muted Категория: #{bulletin.category.name}
+            p.card-text = truncate(bulletin.description, length: 100)
+          .card-footer.text-muted
+            small Автор: #{bulletin.user.email}

@@ -4,10 +4,14 @@ one:
   provider: MyString
   uid: MyString
   name: MyString
-  email: MyString
+  email: admin@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, "password") %>
+  admin: true
 
 two:
   provider: MyString
   uid: MyString
   name: MyString
-  email: MyString
+  email: admin@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, "password") %>
+  admin: true
