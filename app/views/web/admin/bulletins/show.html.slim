@@ -1,0 +1,6 @@
+h1 = @bulletin.title
+p = @bulletin.body
+
+= button_to "Опубликовать", publish_web_admin_bulletin_path(@bulletin), method: :patch
+= button_to "Отклонить", reject_web_admin_bulletin_path(@bulletin), method: :patch
+= button_to "В архив", archive_web_admin_bulletin_path(@bulletin), method: :patch

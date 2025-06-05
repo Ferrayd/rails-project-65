@@ -1,0 +1,13 @@
+h1 Мои объявления
+
+- @bulletins.each do |bulletin|
+  .bulletin
+    h2 = bulletin.title
+    p = bulletin.state
+    = link_to "Редактировать", edit_web_bulletin_path(bulletin)
+
+    - if bulletin.may_to_moderation?
+      = button_to "Отправить на модерацию", to_moderation_web_bulletin_path(bulletin), method: :patch
+
+    - if bulletin.may_archive?
+      = button_to "Архивировать", archive_web_bulletin_path(bulletin), method: :patch

@@ -37,8 +37,7 @@ gem "omniauth-github"
 gem "omniauth-rails_csrf_protection"
 gem "slim-rails", "~> 3.6.3"
 gem "faker"
-# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "aasm"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -58,6 +57,10 @@ end
 group :test do
   gem "capybara"
   gem "selenium-webdriver"
+end
+
+group :production do
+  gem "pg"
 end
 
 gem "aws-sdk-s3", "~> 1.186"

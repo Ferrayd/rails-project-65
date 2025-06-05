@@ -5,18 +5,33 @@ Rails.application.routes.draw do
     delete "auth/logout", to: "auth#logout"
 
     root "bulletins#index"
+
+    resource :profile, only: :show
+    resources :bulletins do
+      member do
+        patch :to_moderation
+        patch :archive
+      end
+    end
   end
 
   namespace :web do
-    resources :bulletins, only: [ :index, :new, :create ]
     get "sign_in", to: "sessions#new"
     post "sign_in", to: "sessions#create"
     delete "sign_out", to: "sessions#destroy"
 
     namespace :admin do
-      resources :categories
-      resources :bulletins
       root to: "dashboard#index"
+
+      resources :categories
+
+      resources :bulletins, only: [ :index, :show, :update ] do
+        member do
+          patch :publish
+          patch :reject
+          patch :archive
+        end
+      end
     end
   end
 end
