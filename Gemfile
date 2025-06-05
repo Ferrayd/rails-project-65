@@ -38,6 +38,7 @@ gem "omniauth-rails_csrf_protection"
 gem "slim-rails", "~> 3.6.3"
 gem "faker"
 gem "aasm"
+gem "pundit"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
