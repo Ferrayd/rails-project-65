@@ -35,7 +35,7 @@ gem "bootsnap", require: false
 gem "rollbar", "~> 3.6.0"
 gem "omniauth-github"
 gem "omniauth-rails_csrf_protection"
-gem "slim-rails", "~> 3.6.3"
+gem "slim-rails", "~> 3.7.0"
 gem "faker"
 gem "aasm"
 gem "pundit"
