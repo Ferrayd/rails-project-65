@@ -10,13 +10,13 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
         li.nav-item
           = link_to "Все объявления", root_path, class: "nav-link"
 
-
       ul.navbar-nav.ms-auto
         - if signed_in?
           li.nav-item
             = link_to "Новое объявление", new_web_bulletin_path, class: "nav-link"
           li.nav-item
-            = link_to "Выйти", web_sign_out_path, method: :delete, class: "nav-link"
+            = link_to "Выйти", auth_logout_path, method: :delete, class: "nav-link"
         - else
           li.nav-item
-            = link_to "Войти", web_sign_in_path, class: "nav-link"
+            = form_with url: auth_request_path("github"), method: :post, class: "d-inline", data: { turbo: false } do
+              = submit_tag "Войти через GitHub", class: "nav-link btn btn-link p-0 text-decoration-none"
