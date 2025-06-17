@@ -1,15 +1,36 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-bmw:
-  title: BMW 3 Series
-  description: Отличное состояние
-  image: bmw.jpg
-  user: one
-  category: cars
+draft:
+  title: MyString1
+  description: MyText1
+  user: system_test
+  category: one
+  state: draft
 
-apartment:
-  title: Квартира в центре
-  description: Просторная, светлая
-  image: apartment.jpg
+under_moderation:
+  title: MyString2
+  description: MyText2
   user: one
-  category: real_estate
+  category: one
+  state: under_moderation
+
+published:
+  title: MyString3
+  description: MyText3
+  user: system_test
+  category: two
+  state: published
+
+rejected:
+  title: MyString4
+  description: MyText4
+  user: two
+  category: two
+  state: rejected
+
+archived:
+  title: MyString5
+  description: MyText5
+  user: admin
+  category: one
+  state: archived

@@ -2,6 +2,7 @@ ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
 OmniAuth.config.test_mode = true
+Faker::Config.locale = :en
 
 module ActiveSupport
   class TestCase
@@ -14,6 +15,17 @@ module ActiveSupport
     # Add more helper methods to be used by all tests here...
   end
 end
+
+module FlashAssertions
+  def assert_flash(key, type = :notice)
+    assert_equal I18n.t(key), flash[type]
+  end
+end
+
+class ActionDispatch::IntegrationTest
+  include FlashAssertions
+end
+
 class ActionDispatch::IntegrationTest
   def sign_in(user, options = {})
     auth_hash = {

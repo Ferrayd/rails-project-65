@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   scope module: :web do
-    post "auth/:provider", to: "auth#request", as: :auth_request
+    post "auth/:provider", to: "auth#redirect_to_provider", as: :auth_request
     get "auth/:provider/callback", to: "auth#callback", as: :callback_auth
     delete "auth/logout", to: "auth#logout"
 
@@ -9,19 +9,16 @@ Rails.application.routes.draw do
     resource :profile, only: :show
     resources :bulletins do
       member do
+        patch :publish
         patch :to_moderation
         patch :archive
       end
     end
-  end
 
-  namespace :web do
     namespace :admin do
-      root to: "dashboard#index"
-
-      resources :categories
-
-      resources :bulletins, only: [ :index, :show, :update ] do
+      root to: "bulletins#index"
+      resources :categories, only: [ :new, :create, :destroy ]
+      resources :bulletins, only: [ :index, :show ] do
         member do
           patch :publish
           patch :reject

@@ -1,5 +1,5 @@
 class Web::AuthController < ApplicationController
-  def request
+  def redirect_to_provider
     redirect_to "/auth/#{params[:provider]}"
   end
 
@@ -11,6 +11,11 @@ class Web::AuthController < ApplicationController
     user.save!
 
     session[:user_id] = user.id
-    redirect_to root_path, notice: "Вы вошли как #{user.name}"
+    redirect_to root_path, notice: t("auth.callback.success", name: user.name)
+  end
+
+  def logout
+    reset_session
+    redirect_to root_path, notice: t("auth.logout.success")
   end
 end

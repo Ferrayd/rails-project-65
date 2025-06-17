@@ -1,21 +1,43 @@
-.container.mt-5
-  h1 Новое объявление
+.container.mt-4
+  .row.justify-content-center
+    .col-md-8.col-lg-6
+      .card.shadow-sm
+        .card-body
+          h1.card-title.text-center.mb-4 = t("bulletins.new.title")
 
-  = form_with model: [:web, @bulletin], local: true, html: { multipart: true } do |f|
-    .mb-3
-      = f.label :title, class: "form-label"
-      = f.text_field :title, class: "form-control"
+          = simple_form_for @bulletin, local: true, html: { class: "needs-validation mb-4",
+          novalidate: true, data: { turbo: false } } do |f|
+            .mb-3
+              = f.input :title,
+                        label: t("simple_form.labels.bulletin.title"),
+                        placeholder: t("simple_form.placeholders.bulletin.title"),
+                        input_html: { class: "form-control", required: true },
+                        error: @bulletin.errors[:title].join(", ")
 
-    .mb-3
-      = f.label :description, class: "form-label"
-      = f.text_area :description, class: "form-control", rows: 5
+            .mb-3
+              = f.input :description,
+                        label: t("simple_form.labels.bulletin.description"),
+                        placeholder: t("simple_form.placeholders.bulletin.description"),
+                        input_html: { class: "form-control", rows: 5, required: true },
+                        error: @bulletin.errors[:description].join(", ")
 
-    .mb-3
-      = f.label :image, class: "form-label"
-      = f.file_field :image, class: "form-control"
+            .mb-3
+              = f.input :category_id,
+                        label: t("simple_form.labels.bulletin.category_id"),
+                        collection: Category.all,
+                        value_method: :id,
+                        label_method: :name,
+                        include_blank: t("bulletins.new.category_prompt"),
+                        input_html: { class: "form-control", required: true },
+                        error: @bulletin.errors[:category_id].join(", ")
 
-    .mb-3
-      = f.label :category_id, "Категория", class: "form-label"
-      = f.collection_select :category_id, Category.all, :id, :name, {}, { class: "form-select" }
+            .mb-3
+              = f.input :image,
+                        label: t("simple_form.labels.bulletin.image"),
+                        input_html: { class: "form-control" },
+                        error: @bulletin.errors[:image].join(", ")
 
-    = f.submit "Создать", class: "btn btn-primary"
+            .d-grid
+              = f.button :submit,
+                         t("simple_form.buttons.create_bulletin"),
+                         class: "btn btn-primary btn-lg"

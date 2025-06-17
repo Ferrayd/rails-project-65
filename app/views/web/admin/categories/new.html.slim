@@ -1,0 +1,18 @@
+.container.mt-5
+  .row.justify-content-center
+    .col-md-8.col-lg-6
+      .card.shadow-sm
+        .card-body
+          h1.card-title.text-center.mb-4 = t("categories.new.title")
+
+          = simple_form_for [ :admin, @category ], html: { class: "needs-validation", novalidate: true } do |f|
+            .mb-3
+              = f.input :name,
+                        label: t("simple_form.labels.category.name"),
+                        input_html: { class: "form-control", required: true },
+                        error: t("activerecord.errors.models.category.attributes.name.blank")
+
+            .d-grid
+              = f.button :submit,
+                         t("simple_form.buttons.create_category"),
+                         class: "btn btn-primary btn-lg", data: { turbo: false }

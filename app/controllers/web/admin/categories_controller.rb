@@ -1,40 +1,27 @@
 module Web
   module Admin
-    class CategoriesController < BaseController
-      def index
-        @categories = Category.all
-      end
-
+    class CategoriesController < Web::Admin::BaseController
       def new
         @category = Category.new
+        authorize @category
       end
 
       def create
         @category = Category.new(category_params)
+        authorize @category
+
         if @category.save
-          redirect_to web_admin_categories_path, notice: "Категория создана"
+          redirect_to admin_root_path, notice: t("admin.categories.create.success")
         else
-          render :new
-        end
-      end
-
-      def edit
-        @category = Category.find(params[:id])
-      end
-
-      def update
-        @category = Category.find(params[:id])
-        if @category.update(category_params)
-          redirect_to web_admin_categories_path, notice: "Категория обновлена"
-        else
-          render :edit
+          render :new, status: :unprocessable_entity
         end
       end
 
       def destroy
         @category = Category.find(params[:id])
+        authorize @category
         @category.destroy
-        redirect_to web_admin_categories_path, notice: "Категория удалена"
+        redirect_to admin_root_path, notice: t("admin.categories.destroy.success")
       end
 
       private

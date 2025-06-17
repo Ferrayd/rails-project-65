@@ -1,4 +1,58 @@
-h1 Объявления на модерации
-
-- @bulletins.each do |bulletin|
-  h2 = link_to bulletin.title, web_admin_bulletin_path(bulletin)
+.container.mt-4
+  .card.mb-4
+    .card-header
+      h1.mb-0.text-center = t("admin.bulletins.index.title")
+    .card-body
+      = search_form_for @q, url: admin_root_path, html: { class: "mb-4" } do |f|
+        .row.g-3.align-items-end
+          .col-md-6
+            = f.label :title_or_description_cont, t("admin.bulletins.index.search_label"), class: "form-label"
+            = f.search_field :title_or_description_cont, class: "form-control",
+            placeholder: t("admin.bulletins.index.search_placeholder")
+          .col-md-3
+            = f.label :state_eq, t("admin.bulletins.index.state_label"), class: "form-label"
+            = f.select :state_eq, Bulletin.aasm.states.map { |s| [ t("bulletin.states.#{s.name}"), s.name ] },
+            { include_blank: t("admin.bulletins.index.all_states") }, class: "form-select"
+          .col-md-3
+            = f.label :category_id_eq, t("admin.bulletins.index.category_label"), class: "form-label"
+            = f.collection_select :category_id_eq, Category.all, :id, :name,
+            { include_blank: t("admin.bulletins.index.all_categories") }, class: "form-select"
+          .col-md-3
+            = f.submit t("admin.bulletins.index.search_button"), class: "btn btn-primary w-100", data: { turbo: false }
+          .col-md-3
+            = link_to t("admin.bulletins.index.reset_button"), admin_root_path, class: "btn btn-secondary w-100"
+      - if @bulletins.any?
+        .table-responsive
+          table.table.table-striped.table-hover
+            thead
+              tr
+                th = sort_link(@q, :title, t("admin.bulletins.index.table.title"))
+                th = sort_link(@q, :description, t("admin.bulletins.index.table.description"))
+                th = sort_link(@q, :user_name, t("admin.bulletins.index.table.author"))
+                th = sort_link(@q, :category_name, t("admin.bulletins.index.table.category"))
+                th = sort_link(@q, :state, t("admin.bulletins.index.table.state"))
+                th = t("admin.bulletins.index.table.actions")
+            tbody
+              - @bulletins.each do |bulletin|
+                tr
+                  td = bulletin.title
+                  td = truncate(bulletin.description, length: 100)
+                  td = bulletin.user.name
+                  td = bulletin.category.name
+                  td = t("bulletin.states.#{bulletin.state}")
+                  td.d-flex.gap-2.flex-wrap
+                    = link_to t("admin.bulletins.index.actions.show"), admin_bulletin_path(bulletin),
+                      class: "btn btn-info btn-sm"
+                    - if policy(bulletin).publish?
+                      = button_to t("admin.bulletins.show.actions.publish"), [ :publish, :admin, bulletin ],
+                      method: :patch, class: "btn btn-success btn-sm", data: { turbo: false }
+                    - if policy(bulletin).reject?
+                      = button_to t("admin.bulletins.show.actions.reject"), [ :reject, :admin, bulletin ],
+                      method: :patch, class: "btn btn-warning btn-sm", data: { turbo: false }
+                    - if policy(bulletin).archive? && bulletin.state != "archived"
+                      = button_to t("admin.bulletins.show.actions.archive"), [ :archive, :admin, bulletin ],
+                      method: :patch, class: "btn btn-secondary btn-sm", data: { turbo: false }
+        .mt-3
+          = paginate @bulletins
+      - else
+        .alert.alert-info = t("admin.bulletins.index.no_bulletins")

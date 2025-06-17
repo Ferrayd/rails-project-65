@@ -1,17 +1,35 @@
-.container.mt-5
-  .row.mb-4
-    .col-md-12
-      h1 Объявления
-
-  .row.row-cols-1.row-cols-md-3.g-4
-    - @bulletins.each do |bulletin|
-      .col
-        .card.h-100.shadow-sm
-          - if bulletin.image.attached?
-            = image_tag bulletin.image.variant(resize_to_limit: [400, 250]), class: "card-img-top", alt: bulletin.title
-          .card-body
-            h5.card-title = bulletin.title
-            p.card-text.text-muted Категория: #{bulletin.category.name}
-            p.card-text = truncate(bulletin.description, length: 100)
-          .card-footer.text-muted
-            small Автор: #{bulletin.user.email}
+.container.mt-4
+  h1 = t("bulletins.index.title")
+  = search_form_for @q, url: root_path, html: { class: "mb-4" } do |f|
+    .row
+      .col-md-6
+        = f.label :title_or_description_cont, t("bulletins.index.search_label")
+        = f.search_field :title_or_description_cont, class: "form-control",
+        placeholder: t("bulletins.index.search_placeholder")
+      .col-md-3
+        = f.label :category_id_eq, t("bulletins.index.category_label")
+        = f.collection_select :category_id_eq, Category.all, :id, :name,
+        { include_blank: t("bulletins.index.all_categories") }, class: "form-control"
+      .col-md-1.d-flex.align-items-end
+        = f.submit t("bulletins.index.search_button"), class: "btn btn-primary", data: { turbo: false }
+      .col-md-1.d-flex.align-items-end
+        = link_to t("bulletins.index.reset_button"), root_path, class: "btn btn-secondary"
+  - if @bulletins.any?
+    .row
+      - @bulletins.each do |bulletin|
+        .col-md-4.mb-3
+          .card
+            = image_tag bulletin.image, class: "card-img-top", style: "height: 200px; object-fit: cover"
+            .card-body
+              h5.card-title = bulletin.title
+              p.card-text = truncate(bulletin.description, length: 100)
+              p.card-text
+                small.text-muted
+                  = "#{t("bulletins.index.published_by")} #{bulletin.user.name} \
+                    #{t("bulletins.index.in_category")} #{bulletin.category.name} \
+                    (#{t("bulletin.states.#{bulletin.state}")})"
+                  - if policy(bulletin).show?
+                = link_to t("bulletins.index.actions.show"), bulletin_path(bulletin), class: "btn btn-primary"
+    = paginate @bulletins
+  - else
+    .alert.alert-info = t("bulletins.index.no_bulletins")

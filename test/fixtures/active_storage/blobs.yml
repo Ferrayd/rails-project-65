@@ -1,0 +1,5 @@
+first_image_blob: <%= ActiveStorage::FixtureSet.blob filename: 'bulletin_1.jpg' %>
+second_image_blob: <%= ActiveStorage::FixtureSet.blob filename: 'bulletin_2.jpg' %>
+third_image_blob: <%= ActiveStorage::FixtureSet.blob filename: 'bulletin_3.jpg' %>
+fourth_image_blob: <%= ActiveStorage::FixtureSet.blob filename: 'bulletin_4.jpg' %>
+fifth_image_blob: <%= ActiveStorage::FixtureSet.blob filename: 'bulletin_5.jpg' %>

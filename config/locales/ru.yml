@@ -1,0 +1,170 @@
+---
+ru:
+  activerecord:
+    attributes:
+      bulletin:
+        category_id: Категория
+        description: Описание
+        image: Изображение
+        title: Заголовок
+      category:
+        name: Название
+    models:
+      bulletin: Объявление
+      category: Категория
+  admin:
+    bulletins:
+      archive:
+        success: Объявление архивировано
+      index:
+        actions:
+          archive: Архивировать
+          publish: Опубликовать
+          reject: Отклонить
+          show: Подробнее
+        all_categories: Все категории
+        all_states: Все состояния
+        category_label: Категория
+        no_bulletins: Объявления не найдены
+        reset_button: Сброс
+        search_button: Поиск
+        search_label: Поиск объявлений
+        search_placeholder: Поиск по заголовку или описанию
+        state_label: Состояние
+        table:
+          actions: Действия
+          author: Автор
+          category: Категория
+          description: Описание
+          state: Состояние
+          title: Заголовок
+        title: 'Админ: Все объявления'
+      new:
+        category_label: Категория
+        category_prompt: Выберите категорию
+        description_label: Описание
+        image_label: Изображение
+        submit_button: Создать
+        title: Создать объявление
+        title_label: Заголовок
+      publish:
+        success: Объявление опубликовано
+      reject:
+        success: Объявление отклонено
+      show:
+        actions:
+          archive: В архив
+          back: Назад
+          publish: Опубликовать
+          reject: Отклонить
+        author_label: Автор
+        category_label: Категория
+        state_label: Статус
+    categories:
+      create:
+        success: Категория создана
+      destroy:
+        success: Категория удалена
+      update:
+        success: Категория обновлена
+  application:
+    footer: Доска объявлений
+    title: Доска объявлений
+  auth:
+    callback:
+      success: Вы вошли как %{name}
+    logout:
+      success: Вы вышли
+  bulletin:
+    states:
+      archived: Архивирован
+      draft: Черновик
+      published: Опубликован
+      rejected: Отклонен
+      under_moderation: На модерации
+    validations:
+      image_size: должно быть меньше 5 МБ
+  bulletins:
+    archive:
+      success: Объявление архивировано
+    create:
+      success: Объявление создано
+    index:
+      actions:
+        show: Подробнее
+      all_categories: Все категории
+      category_label: Категория
+      in_category: в
+      no_bulletins: Объявления не найдены
+      published_by: Опубликовал
+      reset_button: Сброс
+      search_button: Поиск
+      search_label: Поиск объявлений
+      search_placeholder: Поиск по заголовку или описанию
+      title: Доска объявлений
+    new:
+      category_label: Категория
+      category_prompt: Выберите категорию
+      description_label: Описание
+      image_label: Изображение
+      submit_button: Создать
+      title: Новое объявление
+      title_label: Заголовок
+    show:
+      actions:
+        back: Назад
+      author_label: Автор
+      category_label: Категория
+      state_label: Статус
+    to_moderation:
+      success: Объявление отправлено на модерацию
+  nav:
+    admin: Админ-панель
+    brand: Доска объявлений
+    category: Создать категорию
+    home: Главная
+    login: Войти через GitHub
+    logout: Выйти
+    profile: Мой профиль
+    toggle: Переключить навигацию
+  profiles:
+    authenticate:
+      alert: Пожалуйста, войдите
+    show:
+      actions:
+        archive: Архивировать
+        show: Подробнее
+        to_moderation: На модерацию
+      all_states: Все состояния
+      create_bulletin: Создать объявление
+      in_category: в
+      no_bulletins: Объявления не найдены
+      reset_button: Сброс
+      search_button: Поиск
+      search_label: Поиск моих объявлений
+      search_placeholder: Поиск по заголовку или описанию
+      state_label: Состояние
+      title: Мои объявления
+  simple_form:
+    buttons:
+      create_bulletin: Создать объявление
+      create_category: Создать категорию
+    labels:
+      bulletin:
+        category_id: Категория
+        description: Описание объявления
+        image: Изображение
+        title: Заголовок объявления
+      category:
+        name: Название категории
+    placeholders:
+      bulletin:
+        category_id: Выберите категорию
+        description: Введите описание
+        title: Введите заголовок
+  views:
+    pagination:
+      first: Первая
+      last: Последняя
+      next: Следующая
+      previous: Предыдущая

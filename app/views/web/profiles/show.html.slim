@@ -1,13 +1,59 @@
-h1 Мои объявления
-
-- @bulletins.each do |bulletin|
-  .bulletin
-    h2 = bulletin.title
-    p = bulletin.state
-    = link_to "Редактировать", edit_web_bulletin_path(bulletin)
-
-    - if bulletin.may_to_moderation?
-      = button_to "Отправить на модерацию", to_moderation_web_bulletin_path(bulletin), method: :patch
-
-    - if bulletin.may_archive?
-      = button_to "Архивировать", archive_web_bulletin_path(bulletin), method: :patch
+.container.mt-4
+  .card.mb-4
+    .card-header
+      h1.mb-0 = t("profiles.show.title")
+    .card-body
+      = search_form_for @q, url: profile_path, html: { class: "mb-4" } do |f|
+        .row.g-3.align-items-end
+          .col-md-6
+            = f.label :title_or_description_cont, \
+              t("profiles.show.search_label"), class: "form-label"
+            = f.search_field :title_or_description_cont, \
+              class: "form-control", \
+              placeholder: t("profiles.show.search_placeholder")
+          .col-md-3
+            = f.label :state_eq, t("profiles.show.state_label"), \
+              class: "form-label"
+            = f.select :state_eq, \
+              Bulletin.aasm.states.map { |s| [ t("bulletin.states.#{s.name}"), s.name ] }, \
+              { include_blank: t("profiles.show.all_states") }, class: "form-select"
+          .col-md-3
+            = f.submit t("profiles.show.search_button"), \
+              class: "btn btn-primary w-100", data: { turbo: false }
+          .col-md-3
+            = link_to t("profiles.show.reset_button"), \
+              profile_path, class: "btn btn-secondary w-100"
+      - if @bulletins.any?
+        .row.g-3
+          - @bulletins.each do |bulletin|
+            .col-md-4
+              .card.h-100
+                = image_tag bulletin.image, class: "card-img-top", \
+                  style: "height: 200px; object-fit: cover"
+                .card-body
+                  h5.card-title = bulletin.title
+                  p.card-text = truncate(bulletin.description, length: 100)
+                  p.card-text
+                    small.text-muted
+                      = "#{t("bulletin.states.#{bulletin.state}")} \
+                        #{t("profiles.show.in_category")} #{bulletin.category.name}"
+                  .d-flex.gap-2.flex-wrap
+                    = link_to t("profiles.show.actions.show"), \
+                      bulletin_path(bulletin), class: "btn btn-primary btn-sm"
+                    - if policy(bulletin).to_moderation?
+                      = form_with url: to_moderation_bulletin_path(bulletin), \
+                        method: :patch, local: true do
+                        = submit_tag t("profiles.show.actions.to_moderation"), \
+                          class: "btn btn-secondary btn-sm", data: { turbo: false }
+                    - if policy(bulletin).archive? && bulletin.state != "archived"
+                      = form_with url: archive_bulletin_path(bulletin), \
+                        method: :patch, local: true do
+                        = submit_tag t("profiles.show.actions.archive"), \
+                          class: "btn btn-danger btn-sm", data: { turbo: false }
+        .mt-3
+          = paginate @bulletins
+      - else
+        .alert.alert-info = t("profiles.show.no_bulletins")
+      .mt-3
+        = link_to t("profiles.show.create_bulletin"), \
+          new_bulletin_path, class: "btn btn-success"

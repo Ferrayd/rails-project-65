@@ -2,7 +2,7 @@ class Bulletin < ApplicationRecord
   include AASM
   belongs_to :user
   belongs_to :category
-
+  paginates_per 50
   has_one_attached :image
 
   validates :title, presence: true, length: { maximum: 50 }
@@ -34,13 +34,21 @@ class Bulletin < ApplicationRecord
     end
   end
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[category_id created_at description id state title updated_at user_id]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[category user]
+  end
+
   private
 
   def image_size_validation
     return unless image.attached?
 
     if image.blob.byte_size > 5.megabytes
-      errors.add(:image, "должно быть меньше 5 МБ")
+      errors.add(:image, t("bulletin.validations.image_size"))
     end
   end
 end

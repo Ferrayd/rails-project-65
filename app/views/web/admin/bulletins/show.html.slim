@@ -1,6 +1,32 @@
-h1 = @bulletin.title
-p = @bulletin.body
-
-= button_to "Опубликовать", publish_web_admin_bulletin_path(@bulletin), method: :patch
-= button_to "Отклонить", reject_web_admin_bulletin_path(@bulletin), method: :patch
-= button_to "В архив", archive_web_admin_bulletin_path(@bulletin), method: :patch
+.container.mt-4
+  .card
+    .card-header
+      h1.mb-0 = @bulletin.title
+    .card-body
+      .row.mb-3
+        .col-md-6
+          p.mb-2
+            strong = t("admin.bulletins.show.category_label")
+            span.ms-2 = @bulletin.category.name
+          p.mb-2
+            strong = t("admin.bulletins.show.author_label")
+            span.ms-2 = @bulletin.user.name || @bulletin.user.email
+          p.mb-2
+            strong = t("admin.bulletins.show.state_label")
+            span.ms-2 = t("bulletin.states.#{@bulletin.state}")
+        .col-md-6
+          = image_tag @bulletin.image, class: "img-fluid rounded", style: "max-height: 300px; object-fit: contain"
+      .mb-3
+        = simple_format @bulletin.description, class: "text-muted"
+      hr
+      .d-flex.gap-2
+        - if policy(@bulletin).publish?
+          = button_to t("admin.bulletins.show.actions.publish"), [ :publish, :admin, @bulletin ],
+          method: :patch, class: "btn btn-success btn-sm", data: { turbo: false }
+        - if policy(@bulletin).reject?
+          = button_to t("admin.bulletins.show.actions.reject"), [ :reject, :admin, @bulletin ],
+          method: :patch, class: "btn btn-warning btn-sm", data: { turbo: false }
+        - if policy(@bulletin).archive? && @bulletin.state != "archived"
+          = button_to t("admin.bulletins.show.actions.archive"), [ :archive, :admin, @bulletin ],
+          method: :patch, class: "btn btn-secondary btn-sm", data: { turbo: false }
+        = link_to t("admin.bulletins.show.actions.back"), admin_bulletins_path, class: "btn btn-outline-dark btn-sm"
