@@ -1,19 +1,34 @@
 .container.mt-4
   h1 = t("bulletins.index.title")
-  = search_form_for @q, url: root_path, html: { class: "mb-4" } do |f|
-    .row
+  = simple_form_for @q, url: root_path, html: { class: "mb-4" }, method: :get do |f|
+    .row.g-3.align-items-end
       .col-md-6
-        = f.label :title_or_description_cont, t("bulletins.index.search_label")
-        = f.search_field :title_or_description_cont, class: "form-control",
-        placeholder: t("bulletins.index.search_placeholder")
+        = f.input :title_or_description_cont,
+          label: t("bulletins.index.search_label"),
+          placeholder: t("bulletins.index.search_placeholder"),
+          input_html: { class: "form-control" },
+          wrapper_html: { class: "mb-0" },
+          required: false
+
       .col-md-3
-        = f.label :category_id_eq, t("bulletins.index.category_label")
-        = f.collection_select :category_id_eq, Category.all, :id, :name,
-        { include_blank: t("bulletins.index.all_categories") }, class: "form-control"
+        = f.input :category_id_eq,
+          label: t("bulletins.index.category_label"),
+          collection: Category.all,
+          include_blank: t("bulletins.index.all_categories"),
+          input_html: { class: "form-select" },
+          wrapper_html: { class: "mb-0" },
+          required: false
+
       .col-md-1.d-flex.align-items-end
-        = f.submit t("bulletins.index.search_button"), class: "btn btn-primary", data: { turbo: false }
+        = f.button :submit,
+          t("bulletins.index.search_button"),
+          class: "btn btn-primary w-100",
+          data: { turbo: false }
+
       .col-md-1.d-flex.align-items-end
-        = link_to t("bulletins.index.reset_button"), root_path, class: "btn btn-secondary"
+        = link_to t("bulletins.index.reset_button"),
+          root_path,
+          class: "btn btn-secondary w-100"
   - if @bulletins.any?
     .row
       - @bulletins.each do |bulletin|

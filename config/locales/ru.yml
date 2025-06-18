@@ -61,6 +61,8 @@ ru:
         category_label: Категория
         state_label: Статус
     categories:
+      new:
+        title: Создайте категорию
       create:
         success: Категория создана
       destroy:
