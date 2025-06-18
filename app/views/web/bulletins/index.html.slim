@@ -44,7 +44,10 @@
                     #{t("bulletins.index.in_category")} #{bulletin.category.name} \
                     (#{t("bulletin.states.#{bulletin.state}")})"
                   - if policy(bulletin).show?
-                = link_to t("bulletins.index.actions.show"), bulletin_path(bulletin), class: "btn btn-primary"
+                    = link_to t("bulletins.index.actions.show"), bulletin_path(bulletin), class: "btn btn-primary"
+                  - if policy(bulletin).edit?
+                    = link_to t("bulletins.index.actions.edit"), edit_bulletin_path(bulletin),
+                    class: "btn btn-secondary ms-2"
     = paginate @bulletins
   - else
     .alert.alert-info = t("bulletins.index.no_bulletins")

@@ -15,7 +15,7 @@ html
     link[rel="apple-touch-icon" href="/icon.png"]
 
     = stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload"
-    = javascript_include_tag "application", "data-turbo-track": "reload"
+    = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
   body.d-flex.flex-column.h-100
     header
       = render "layouts/shared/nav"

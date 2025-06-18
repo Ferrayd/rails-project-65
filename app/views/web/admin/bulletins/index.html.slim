@@ -1,4 +1,9 @@
 .container.mt-4
+  .mb-3.d-flex.gap-2.flex-wrap.justify-content-center
+    = link_to t("admin.navigation.all_bulletins"), admin_root_path, class: "btn btn-outline-primary"
+    = link_to t("admin.navigation.bulletins_only"), admin_bulletins_path, class: "btn btn-outline-secondary"
+    = link_to t("admin.navigation.categories"), admin_categories_path, class: "btn btn-outline-secondary"
+.container.mt-4
   .card.mb-4
     .card-header
       h1.mb-0.text-center = t("admin.bulletins.index.title")

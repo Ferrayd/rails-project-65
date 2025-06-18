@@ -12,12 +12,14 @@ Rails.application.routes.draw do
         patch :publish
         patch :to_moderation
         patch :archive
+        get :edit
+        patch :update
       end
     end
 
     namespace :admin do
       root to: "bulletins#index"
-      resources :categories, only: [ :new, :create, :destroy ]
+      resources :categories, only: [ :index, :new, :create, :edit, :update, :destroy ]
       resources :bulletins, only: [ :index, :show ] do
         member do
           patch :publish

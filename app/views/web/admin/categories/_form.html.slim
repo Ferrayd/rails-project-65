@@ -1,0 +1,12 @@
+= simple_form_for [ :admin, @category ], html: { class: "needs-validation", novalidate: true } do |f|
+  .mb-3
+    = f.input :name,
+              label: t("simple_form.labels.category.name"),
+              input_html: { class: "form-control", required: true },
+              error: t("activerecord.errors.models.category.attributes.name.blank")
+
+  .d-grid
+    = f.button :submit,
+               @category.persisted? ? t("simple_form.buttons.update_cat") : t("simple_form.buttons.create_category"),
+               class: "btn btn-primary btn-lg",
+               data: { turbo: false }

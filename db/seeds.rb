@@ -1,5 +1,3 @@
-require "faker"
-
 puts "Создание категорий..."
 if Category.count == 0
   %w[Авто Недвижимость Электроника].each do |name|

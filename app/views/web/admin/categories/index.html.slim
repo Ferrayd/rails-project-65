@@ -1,0 +1,31 @@
+.container.mt-4
+  .card
+    .card-header
+      h1.mb-0.text-center = t("admin.categories.index.title")
+
+    .card-body
+      = link_to t("admin.categories.index.new_category"),
+        new_admin_category_path,
+        class: "btn btn-success mb-3"
+
+      - if @categories.any?
+        table.table.table-bordered.table-striped
+          thead
+            tr
+              th = t("admin.categories.index.table.name")
+              th = t("admin.categories.index.table.actions")
+          tbody
+            - @categories.each do |category|
+              tr
+                td = category.name
+                td.d-flex.gap-2
+                  = link_to t("admin.categories.index.edit"),
+                    edit_admin_category_path(category),
+                    class: "btn btn-outline-primary btn-sm"
+                  = button_to t("admin.categories.index.delete"),
+                              admin_category_path(category),
+                              method: :delete,
+                              data: { turbo: false },
+                              class: "btn btn-outline-danger btn-sm"
+      - else
+        .alert.alert-info = t("admin.categories.index.no_categories")

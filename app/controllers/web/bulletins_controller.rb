@@ -24,14 +24,27 @@ module Web
       else
         render :new, status: :unprocessable_entity
       end
-    end
-
-    def to_moderation
       bulletin = current_user.bulletins.find(params[:id])
       authorize bulletin, :to_moderation?
 
       bulletin.to_moderation!
       redirect_to profile_path, notice: t("bulletins.to_moderation.success")
+    end
+
+    def edit
+      @bulletin = current_user.bulletins.find(params[:id])
+      authorize @bulletin
+    end
+
+    def update
+      @bulletin = current_user.bulletins.find(params[:id])
+      authorize @bulletin
+
+      if @bulletin.update(bulletin_params)
+        redirect_to @bulletin, notice: t("bulletins.update.success")
+      else
+        render :edit, status: :unprocessable_entity
+      end
     end
 
     def archive

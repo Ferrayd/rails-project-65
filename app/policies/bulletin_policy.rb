@@ -11,6 +11,14 @@ class BulletinPolicy < ApplicationPolicy
     @user.present?
   end
 
+  def edit?
+    @user && @user == record.user
+  end
+
+  def update?
+    @user && @user == record.user
+  end
+
   def to_moderation?
     @user && @user == record.user && record.draft?
   end

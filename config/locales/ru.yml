@@ -61,14 +61,30 @@ ru:
         category_label: Категория
         state_label: Статус
     categories:
-      new:
-        title: Создайте категорию
       create:
         success: Категория создана
       destroy:
         success: Категория удалена
+      edit:
+        title: Редактировать категорию
+      index:
+        confirm_delete: Вы уверены, что хотите удалить категорию?
+        delete: Удалить
+        edit: Редактировать
+        new_category: Создать категорию
+        no_categories: Категории отсутствуют
+        table:
+          actions: Действия
+          name: Название
+        title: Категории
+      new:
+        title: Создайте категорию
       update:
         success: Категория обновлена
+    navigation:
+      all_bulletins: Все объявления
+      bulletins_only: Объявления
+      categories: Категории
   application:
     footer: Доска объявлений
     title: Доска объявлений
@@ -91,19 +107,22 @@ ru:
       success: Объявление архивировано
     create:
       success: Объявление создано
+    edit:
+      title: Редактировать объявление
     index:
       actions:
+        edit: Редактировать
         show: Подробнее
       all_categories: Все категории
       category_label: Категория
       in_category: в
       no_bulletins: Объявления не найдены
-      published_by: Опубликовал
+      published_by: Опубликовано
       reset_button: Сброс
       search_button: Поиск
       search_label: Поиск объявлений
       search_placeholder: Поиск по заголовку или описанию
-      title: Доска объявлений
+      title: Все объявления
     new:
       category_label: Категория
       category_prompt: Выберите категорию
@@ -120,6 +139,8 @@ ru:
       state_label: Статус
     to_moderation:
       success: Объявление отправлено на модерацию
+    update:
+      success: Объявление успешно обновлено
   nav:
     admin: Админ-панель
     brand: Доска объявлений
@@ -151,6 +172,8 @@ ru:
     buttons:
       create_bulletin: Создать объявление
       create_category: Создать категорию
+      update_bulletin: Сохранить изменения
+      update_cat: Сохранить изменения
     labels:
       bulletin:
         category_id: Категория
