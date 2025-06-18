@@ -1,68 +1,63 @@
 .container.mt-4
   .card.mb-4
     .card-header
-      h1.mb-0 = t("profiles.show.title")
+      h1.mb-0 = t('profiles.show.title')
     .card-body
-      = simple_form_for @q, url: profile_path, method: :get, html: { class: "mb-4" } do |f|
+      = simple_form_for @q, url: profile_path, method: :get, html: { class: 'mb-4' } do |f|
         .row.g-3.align-items-end
           .col-md-6
             = f.input :title_or_description_cont,
-              label: t("profiles.show.search_label"),
-              placeholder: t("profiles.show.search_placeholder"),
-              input_html: { class: "form-control" },
-              wrapper_html: { class: "mb-0" },
+              label: t('profiles.show.search_label'),
+              placeholder: t('profiles.show.search_placeholder'),
+              input_html: { class: 'form-control' },
+              wrapper_html: { class: 'mb-0' },
               required: false
           .col-md-3
             = f.input :state_eq,
-              label: t("profiles.show.state_label"),
-              collection: Bulletin.aasm.states.map { |s| [ t("bulletin.states.#{s.name}"), s.name ] },
-              include_blank: t("profiles.show.all_states"),
-              input_html: { class: "form-select" },
-              wrapper_html: { class: "mb-0" },
+              label: t('profiles.show.state_label'),
+              collection: Bulletin.aasm.states.map { |s| [t("bulletin.states.#{s.name}"), s.name] },
+              include_blank: t('profiles.show.all_states'),
+              input_html: { class: 'form-select' },
+              wrapper_html: { class: 'mb-0' },
               required: false
           .col-md-3
             = f.button :submit,
-              t("profiles.show.search_button"),
-              class: "btn btn-primary w-100",
+              t('profiles.show.search_button'),
+              class: 'btn btn-primary w-100',
               data: { turbo: false }
           .col-md-3
-            = link_to t("profiles.show.reset_button"),
+            = link_to t('profiles.show.reset_button'),
               profile_path,
-              class: "btn btn-secondary w-100"
+              class: 'btn btn-secondary w-100'
       - if @bulletins.any?
         .row.g-3
           - @bulletins.each do |bulletin|
             .col-md-4
               .card.h-100
-                = image_tag bulletin.image, class: "card-img-top", \
-                  style: "height: 200px; object-fit: cover"
+                = image_tag bulletin.image, class: 'card-img-top', style: 'height: 200px; object-fit: cover'
                 .card-body
                   h5.card-title = bulletin.title
                   p.card-text = truncate(bulletin.description, length: 100)
                   p.card-text
                     small.text-muted
-                      = "#{t("bulletin.states.#{bulletin.state}")} \
-                        #{t("profiles.show.in_category")} #{bulletin.category.name}"
+                      = "#{t("bulletin.states.#{bulletin.state}")} #{t('profiles.show.in_category')} " \
+                        "#{bulletin.category.name}"
                   .d-flex.gap-2.flex-wrap
-                    = link_to t("profiles.show.actions.show"), \
-                      bulletin_path(bulletin), class: "btn btn-primary btn-sm"
+                    = link_to t('profiles.show.actions.show'), bulletin_path(bulletin), class: 'btn btn-primary btn-sm'
                     - if policy(bulletin).to_moderation?
-                      = form_with url: to_moderation_bulletin_path(bulletin), \
-                        method: :patch, local: true do
-                        = submit_tag t("profiles.show.actions.to_moderation"), \
-                          class: "btn btn-secondary btn-sm", data: { turbo: false }
-                    - if policy(bulletin).archive? && bulletin.state != "archived"
-                      = form_with url: archive_bulletin_path(bulletin), \
-                        method: :patch, local: true do
-                        = submit_tag t("profiles.show.actions.archive"), \
-                          class: "btn btn-danger btn-sm", data: { turbo: false }
+                      = form_with url: to_moderation_bulletin_path(bulletin), method: :patch, local: true do
+                        = submit_tag t('profiles.show.actions.to_moderation'), class: 'btn btn-secondary btn-sm',
+                        data: { turbo: false }
+                    - if policy(bulletin).archive? && bulletin.state != 'archived'
+                      = form_with url: archive_bulletin_path(bulletin), method: :patch, local: true do
+                        = submit_tag t('profiles.show.actions.archive'), class: 'btn btn-danger btn-sm',
+                        data: { turbo: false }
                     - if policy(bulletin).edit?
-                      = link_to t("bulletins.index.actions.edit"), edit_bulletin_path(bulletin),
-                      class: "btn btn-secondary ms-2"
+                      = link_to t('bulletins.index.actions.edit'), edit_bulletin_path(bulletin),
+                      class: 'btn btn-secondary ms-2'
         .mt-3
           = paginate @bulletins
       - else
-        .alert.alert-info = t("profiles.show.no_bulletins")
+        .alert.alert-info = t('profiles.show.no_bulletins')
       .mt-3
-        = link_to t("profiles.show.create_bulletin"), \
-          new_bulletin_path, class: "btn btn-success"
+        = link_to t('profiles.show.create_bulletin'), new_bulletin_path, class: 'btn btn-success'

@@ -151,7 +151,7 @@ ru:
       success: Объявление успешно обновлено
   categories:
     edit:
-      title: Редактировать категорию
+      title: Категория
   nav:
     admin: Админ-панель
     brand: Доска объявлений
@@ -181,9 +181,9 @@ ru:
       title: Мои объявления
   simple_form:
     buttons:
-      create_bulletin: Создать объявление
-      create_category: Создать категорию
-      update_bulletin: Сохранить изменения
+      crt_bul: Создать объявление
+      create_category: Сохранить
+      upd_bul: Сохранить изменения
       update_cat: Сохранить изменения
     labels:
       bulletin:

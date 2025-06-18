@@ -1,62 +1,62 @@
 .container.mt-4
   .mb-3.d-flex.gap-2.flex-wrap.justify-content-center
-    = link_to t("admin.navigation.all_bulletins"), admin_root_path, class: "btn btn-outline-primary"
-    = link_to t("admin.navigation.bulletins_only"), admin_bulletins_path, class: "btn btn-outline-secondary"
-    = link_to t("admin.navigation.categories"), admin_categories_path, class: "btn btn-outline-secondary"
+    = link_to t('admin.navigation.all_bulletins'), admin_root_path, class: 'btn btn-outline-primary'
+    = link_to t('admin.navigation.bulletins_only'), admin_bulletins_path, class: 'btn btn-outline-secondary'
+    = link_to t('admin.navigation.categories'), admin_categories_path, class: 'btn btn-outline-secondary'
 .container.mt-4
   .card.mb-4
     .card-header
-      h1.mb-0.text-center = t("admin.bulletins.index.title")
+      h1.mb-0.text-center = t('admin.bulletins.index.title')
     .card-body
-      = simple_form_for @q, url: admin_root_path, method: :get, html: { class: "mb-4" } do |f|
+      = simple_form_for @q, url: admin_root_path, method: :get, html: { class: 'mb-4' } do |f|
         .row.g-3.align-items-end
           .col-md-6
             = f.input :title_or_description_cont,
-              label: t("admin.bulletins.index.search_label"),
-              placeholder: t("admin.bulletins.index.search_placeholder"),
-              input_html: { class: "form-control" },
-              wrapper_html: { class: "mb-0" },
+              label: t('admin.bulletins.index.search_label'),
+              placeholder: t('admin.bulletins.index.search_placeholder'),
+              input_html: { class: 'form-control' },
+              wrapper_html: { class: 'mb-0' },
               required: false
 
           .col-md-3
             = f.input :state_eq,
-              label: t("admin.bulletins.index.state_label"),
-              collection: Bulletin.aasm.states.map { |s| [ t("bulletin.states.#{s.name }"), s.name ] },
-              include_blank: t("admin.bulletins.index.all_states"),
-              input_html: { class: "form-select" },
-              wrapper_html: { class: "mb-0" },
+              label: t('admin.bulletins.index.state_label'),
+              collection: Bulletin.aasm.states.map { |s| [t("bulletin.states.#{s.name}"), s.name] },
+              include_blank: t('admin.bulletins.index.all_states'),
+              input_html: { class: 'form-select' },
+              wrapper_html: { class: 'mb-0' },
               required: false
 
           .col-md-3
             = f.input :category_id_eq,
-              label: t("admin.bulletins.index.category_label"),
+              label: t('admin.bulletins.index.category_label'),
               collection: Category.all,
-              include_blank: t("admin.bulletins.index.all_categories"),
-              input_html: { class: "form-select" },
-              wrapper_html: { class: "mb-0" },
+              include_blank: t('admin.bulletins.index.all_categories'),
+              input_html: { class: 'form-select' },
+              wrapper_html: { class: 'mb-0' },
               required: false
 
           .col-md-3
             = f.button :submit,
-              t("admin.bulletins.index.search_button"),
-              class: "btn btn-primary w-100",
+              t('admin.bulletins.index.search_button'),
+              class: 'btn btn-primary w-100',
               data: { turbo: false }
 
           .col-md-3
-            = link_to t("admin.bulletins.index.reset_button"),
+            = link_to t('admin.bulletins.index.reset_button'),
               admin_root_path,
-              class: "btn btn-secondary w-100"
+              class: 'btn btn-secondary w-100'
       - if @bulletins.any?
         .table-responsive
           table.table.table-striped.table-hover
             thead
               tr
-                th = sort_link(@q, :title, t("admin.bulletins.index.table.title"))
-                th = sort_link(@q, :description, t("admin.bulletins.index.table.description"))
-                th = sort_link(@q, :user_name, t("admin.bulletins.index.table.author"))
-                th = sort_link(@q, :category_name, t("admin.bulletins.index.table.category"))
-                th = sort_link(@q, :state, t("admin.bulletins.index.table.state"))
-                th = t("admin.bulletins.index.table.actions")
+                th = sort_link(@q, :title, t('admin.bulletins.index.table.title'))
+                th = sort_link(@q, :description, t('admin.bulletins.index.table.description'))
+                th = sort_link(@q, :user_name, t('admin.bulletins.index.table.author'))
+                th = sort_link(@q, :category_name, t('admin.bulletins.index.table.category'))
+                th = sort_link(@q, :state, t('admin.bulletins.index.table.state'))
+                th = t('admin.bulletins.index.table.actions')
             tbody
               - @bulletins.each do |bulletin|
                 tr
@@ -66,18 +66,18 @@
                   td = bulletin.category.name
                   td = t("bulletin.states.#{bulletin.state}")
                   td.d-flex.gap-2.flex-wrap
-                    = link_to t("admin.bulletins.index.actions.show"), admin_bulletin_path(bulletin),
-                      class: "btn btn-info btn-sm"
+                    = link_to t('admin.bulletins.index.actions.show'), admin_bulletin_path(bulletin),
+                      class: 'btn btn-info btn-sm'
                     - if policy(bulletin).publish?
-                      = button_to t("admin.bulletins.show.actions.publish"), [ :publish, :admin, bulletin ],
-                      method: :patch, class: "btn btn-success btn-sm", data: { turbo: false }
+                      = button_to t('admin.bulletins.show.actions.publish'), [:publish, :admin, bulletin],
+                      method: :patch, class: 'btn btn-success btn-sm', data: { turbo: false }
                     - if policy(bulletin).reject?
-                      = button_to t("admin.bulletins.show.actions.reject"), [ :reject, :admin, bulletin ],
-                      method: :patch, class: "btn btn-warning btn-sm", data: { turbo: false }
-                    - if policy(bulletin).archive? && bulletin.state != "archived"
-                      = button_to t("admin.bulletins.show.actions.archive"), [ :archive, :admin, bulletin ],
-                      method: :patch, class: "btn btn-secondary btn-sm", data: { turbo: false }
+                      = button_to t('admin.bulletins.show.actions.reject'), [:reject, :admin, bulletin],
+                      method: :patch, class: 'btn btn-warning btn-sm', data: { turbo: false }
+                    - if policy(bulletin).archive? && bulletin.state != 'archived'
+                      = button_to t('admin.bulletins.show.actions.archive'), [:archive, :admin, bulletin],
+                      method: :patch, class: 'btn btn-secondary btn-sm', data: { turbo: false }
         .mt-3
           = paginate @bulletins
       - else
-        .alert.alert-info = t("admin.bulletins.index.no_bulletins")
+        .alert.alert-info = t('admin.bulletins.index.no_bulletins')

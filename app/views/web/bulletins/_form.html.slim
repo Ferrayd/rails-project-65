@@ -4,41 +4,41 @@
       .card.shadow-sm
         .card-body
           h1.card-title.text-center.mb-4
-            = @bulletin.new_record? ? t("bulletins.new.title") : t("bulletins.edit.title")
+            = @bulletin.new_record? ? t('bulletins.new.title') : t('bulletins.edit.title')
 
-          = simple_form_for @bulletin, local: true, html: { class: "needs-validation mb-4",
+          = simple_form_for @bulletin, local: true, html: { class: 'needs-validation mb-4',
           novalidate: true, data: { turbo: false } } do |f|
             .mb-3
               = f.input :title,
-                        label: t("simple_form.labels.bulletin.title"),
-                        placeholder: t("simple_form.placeholders.bulletin.title"),
-                        input_html: { class: "form-control", required: true },
-                        error: @bulletin.errors[:title].join(", ")
+                        label: t('simple_form.labels.bulletin.title'),
+                        placeholder: t('simple_form.placeholders.bulletin.title'),
+                        input_html: { class: 'form-control', required: true },
+                        error: @bulletin.errors[:title].join(', ')
 
             .mb-3
               = f.input :description,
-                        label: t("simple_form.labels.bulletin.description"),
-                        placeholder: t("simple_form.placeholders.bulletin.description"),
-                        input_html: { class: "form-control", rows: 5, required: true },
-                        error: @bulletin.errors[:description].join(", ")
+                        label: t('simple_form.labels.bulletin.description'),
+                        placeholder: t('simple_form.placeholders.bulletin.description'),
+                        input_html: { class: 'form-control', rows: 5, required: true },
+                        error: @bulletin.errors[:description].join(', ')
 
             .mb-3
               = f.input :category_id,
-                        label: t("simple_form.labels.bulletin.category_id"),
+                        label: t('simple_form.labels.bulletin.category_id'),
                         collection: Category.all,
                         value_method: :id,
                         label_method: :name,
-                        include_blank: t("bulletins.new.category_prompt"),
-                        input_html: { class: "form-control", required: true },
-                        error: @bulletin.errors[:category_id].join(", ")
+                        include_blank: t('bulletins.new.category_prompt'),
+                        input_html: { class: 'form-control', required: true },
+                        error: @bulletin.errors[:category_id].join(', ')
 
             .mb-3
               = f.input :image,
-                        label: t("simple_form.labels.bulletin.image"),
-                        input_html: { class: "form-control" },
-                        error: @bulletin.errors[:image].join(", ")
+                        label: t('simple_form.labels.bulletin.image'),
+                        input_html: { class: 'form-control' },
+                        error: @bulletin.errors[:image].join(', ')
 
             .d-grid
               = f.button :submit,
-                         @bulletin.new_record? ? t("simple_form.buttons.create_bulletin") : t("simple_form.buttons.update_bulletin"),
-                         class: "btn btn-primary btn-lg"
+                         @bulletin.new_record? ? t('simple_form.buttons.crt_bul') : t('simple_form.buttons.upd_bul'),
+                         class: 'btn btn-primary btn-lg'
