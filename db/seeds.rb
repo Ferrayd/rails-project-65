@@ -2,7 +2,7 @@
 
 require 'faker'
 
-puts 'Создание категорий...'
+Rails.logger.debug 'Создание категорий...'
 if Category.count.zero?
   %w[Авто Недвижимость Электроника].each do |name|
     Category.find_or_create_by!(name: name)
@@ -10,7 +10,7 @@ if Category.count.zero?
 end
 categories = Category.all
 
-puts 'Создание пользователей...'
+Rails.logger.debug 'Создание пользователей...'
 if User.count < 5
   (5 - User.count).times do
     User.create!(
@@ -23,8 +23,8 @@ if User.count < 5
 end
 users = User.all
 
-puts 'Создание объявлений...'
-image_paths = Dir[Rails.root.join('test/fixtures/files/bulletin_*.jpg')]
+Rails.logger.debug 'Создание объявлений...'
+image_paths = Rails.root.glob('test/fixtures/files/bulletin_*.jpg')
 created_count = 0
 
 while Bulletin.count < 20
@@ -46,11 +46,11 @@ while Bulletin.count < 20
   if bulletin.save
     created_count += 1
   else
-    puts "Ошибка при создании объявления: #{bulletin.errors.full_messages.join(', ')}"
+    Rails.logger.debug { "Ошибка при создании объявления: #{bulletin.errors.full_messages.join(', ')}" }
   end
 
   sleep 0.1
 end
 
-puts "Создано #{created_count} новых объявлений"
-puts 'Готово!'
+Rails.logger.debug { "Создано #{created_count} новых объявлений" }
+Rails.logger.debug 'Готово!'

@@ -94,6 +94,7 @@ ru:
   application:
     footer: Доска объявлений
     title: Доска объявлений
+    access_denied: Доступ запрещен
   auth:
     callback:
       success: Вы вошли как %{name}

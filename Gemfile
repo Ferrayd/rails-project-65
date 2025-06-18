@@ -57,7 +57,6 @@ group :development, :test do
   gem 'minitest-power_assert'
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
-  gem 'rubocop-rails-omakase', require: false
   gem 'slim_lint'
 end
 

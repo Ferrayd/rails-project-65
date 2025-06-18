@@ -13,6 +13,11 @@ module Web
         authorize @category
       end
 
+      def edit
+        @category = Category.find(params[:id])
+        authorize @category
+      end
+
       def create
         @category = Category.new(category_params)
         authorize @category
@@ -24,18 +29,6 @@ module Web
         end
       end
 
-      def destroy
-        @category = Category.find(params[:id])
-        authorize @category
-        @category.destroy
-        redirect_to admin_root_path, notice: t('admin.categories.destroy.success')
-      end
-
-      def edit
-        @category = Category.find(params[:id])
-        authorize @category
-      end
-
       def update
         @category = Category.find(params[:id])
         authorize @category
@@ -45,6 +38,13 @@ module Web
         else
           render :edit, status: :unprocessable_entity
         end
+      end
+
+      def destroy
+        @category = Category.find(params[:id])
+        authorize @category
+        @category.destroy
+        redirect_to admin_root_path, notice: t('admin.categories.destroy.success')
       end
 
       private
