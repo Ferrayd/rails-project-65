@@ -46,6 +46,7 @@ gem "sassc-rails"
 gem "rails-i18n"
 gem "i18n-debug"
 gem "i18n-tasks"
+gem "faker"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -63,7 +64,6 @@ group :development do
 end
 
 group :test do
-  gem "faker"
   gem "capybara"
   gem "selenium-webdriver"
 end
