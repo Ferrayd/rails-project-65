@@ -9,8 +9,14 @@ ru:
         title: Заголовок
       category:
         name: Название
+    errors:
+      models:
+        category:
+          attributes:
+            name:
+              blank: Название не может быть пустым
     models:
-      bulletin: Объявление
+      bulletin: Объявления
       category: Категория
   admin:
     bulletins:
@@ -131,6 +137,7 @@ ru:
       submit_button: Создать
       title: Новое объявление
       title_label: Заголовок
+    not_found: Объявления не найдены
     show:
       actions:
         back: Назад
@@ -141,6 +148,9 @@ ru:
       success: Объявление отправлено на модерацию
     update:
       success: Объявление успешно обновлено
+  categories:
+    edit:
+      title: Редактировать категорию
   nav:
     admin: Админ-панель
     brand: Доска объявлений

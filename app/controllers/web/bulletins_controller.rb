@@ -24,35 +24,51 @@ module Web
       else
         render :new, status: :unprocessable_entity
       end
-      bulletin = current_user.bulletins.find(params[:id])
-      authorize bulletin, :to_moderation?
-
-      bulletin.to_moderation!
-      redirect_to profile_path, notice: t("bulletins.to_moderation.success")
     end
 
-    def edit
-      @bulletin = current_user.bulletins.find(params[:id])
-      authorize @bulletin
-    end
-
-    def update
-      @bulletin = current_user.bulletins.find(params[:id])
-      authorize @bulletin
-
-      if @bulletin.update(bulletin_params)
-        redirect_to @bulletin, notice: t("bulletins.update.success")
+    def to_moderation
+      bulletin = current_user.bulletins.find_by(id: params[:id])
+      if bulletin
+        authorize bulletin, :to_moderation?
+        bulletin.to_moderation!
+        redirect_to profile_path, notice: t("bulletins.to_moderation.success")
       else
-        render :edit, status: :unprocessable_entity
+        redirect_to root_path, alert: t("bulletins.not_found")
       end
     end
 
     def archive
-      bulletin = current_user.bulletins.find(params[:id])
-      authorize bulletin, :archive?
+      bulletin = current_user.bulletins.find_by(id: params[:id])
+      if bulletin
+        authorize bulletin, :archive?
+        bulletin.archive!
+        redirect_to profile_path, notice: t("bulletins.archive.success")
+      else
+        redirect_to root_path, alert: t("bulletins.not_found")
+      end
+    end
 
-      bulletin.archive!
-      redirect_to profile_path, notice: t("bulletins.archive.success")
+def edit
+      @bulletin = current_user.bulletins.find_by(id: params[:id])
+      if @bulletin
+        authorize @bulletin
+      else
+        redirect_to root_path, alert: t("bulletins.not_found")
+      end
+    end
+
+    def update
+      @bulletin = current_user.bulletins.find_by(id: params[:id])
+      if @bulletin
+        authorize @bulletin
+        if @bulletin.update(bulletin_params)
+          redirect_to @bulletin, notice: t("bulletins.update.success")
+        else
+          render :edit, status: :unprocessable_entity
+        end
+      else
+        redirect_to root_path, alert: t("bulletins.not_found")
+      end
     end
 
     private
