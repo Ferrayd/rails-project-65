@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BulletinPolicy < ApplicationPolicy
   def index?
     true
@@ -45,9 +47,9 @@ class BulletinPolicy < ApplicationPolicy
       if @user&.admin?
         @scope.all
       elsif @user
-        @scope.where(user: @user).or(@scope.where(state: "published"))
+        @scope.where(user: @user).or(@scope.where(state: 'published'))
       else
-        @scope.where(state: "published")
+        @scope.where(state: 'published')
       end
     end
   end

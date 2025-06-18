@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 module Admin
-  class BasePolicy < Struct.new(:user, :record)
+  BasePolicy = Struct.new(:user, :record) do
     def access?
       user&.admin?
     end

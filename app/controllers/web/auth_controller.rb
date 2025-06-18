@@ -1,21 +1,25 @@
-class Web::AuthController < ApplicationController
-  def redirect_to_provider
-    redirect_to "/auth/#{params[:provider]}"
-  end
+# frozen_string_literal: true
 
-  def callback
-    auth = request.env["omniauth.auth"]
-    user = User.find_or_initialize_by(email: auth.info.email.downcase)
+module Web
+  class AuthController < ApplicationController
+    def redirect_to_provider
+      redirect_to "/auth/#{params[:provider]}"
+    end
 
-    user.name = auth.info.name
-    user.save!
+    def callback
+      auth = request.env['omniauth.auth']
+      user = User.find_or_initialize_by(email: auth.info.email.downcase)
 
-    session[:user_id] = user.id
-    redirect_to root_path, notice: t("auth.callback.success", name: user.name)
-  end
+      user.name = auth.info.name
+      user.save!
 
-  def logout
-    reset_session
-    redirect_to root_path, notice: t("auth.logout.success")
+      session[:user_id] = user.id
+      redirect_to root_path, notice: t('auth.callback.success', name: user.name)
+    end
+
+    def logout
+      reset_session
+      redirect_to root_path, notice: t('auth.logout.success')
+    end
   end
 end

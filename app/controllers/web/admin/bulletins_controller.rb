@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Web
   module Admin
     class BulletinsController < Web::Admin::BaseController
@@ -15,21 +17,21 @@ module Web
         bulletin = Bulletin.find(params[:id])
         authorize bulletin, :publish?
         bulletin.publish!
-        redirect_to admin_root_path, notice: t("admin.bulletins.publish.success")
+        redirect_to admin_root_path, notice: t('admin.bulletins.publish.success')
       end
 
       def reject
         bulletin = Bulletin.find(params[:id])
         authorize bulletin, :reject?
         bulletin.reject!
-        redirect_to admin_root_path, notice: t("admin.bulletins.reject.success")
+        redirect_to admin_root_path, notice: t('admin.bulletins.reject.success')
       end
 
       def archive
         bulletin = Bulletin.find(params[:id])
         authorize bulletin, :archive?
         bulletin.archive!
-        redirect_to admin_root_path, notice: t("admin.bulletins.archive.success")
+        redirect_to admin_root_path, notice: t('admin.bulletins.archive.success')
       end
     end
   end

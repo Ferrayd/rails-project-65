@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Web
   module Admin
     class BaseController < Web::ApplicationController
@@ -6,7 +8,7 @@ module Web
       private
 
       def authorize_admin!
-        authorize [ :admin, :base ], :access?
+        authorize %i[admin base], :access?
       end
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Bulletin < ApplicationRecord
   include AASM
   belongs_to :user
@@ -30,15 +32,15 @@ class Bulletin < ApplicationRecord
     end
 
     event :archive do
-      transitions from: [ :draft, :under_moderation, :published, :rejected ], to: :archived
+      transitions from: %i[draft under_moderation published rejected], to: :archived
     end
   end
 
-  def self.ransackable_attributes(auth_object = nil)
+  def self.ransackable_attributes(_auth_object = nil)
     %w[category_id created_at description id state title updated_at user_id]
   end
 
-  def self.ransackable_associations(auth_object = nil)
+  def self.ransackable_associations(_auth_object = nil)
     %w[category user]
   end
 
@@ -47,8 +49,8 @@ class Bulletin < ApplicationRecord
   def image_size_validation
     return unless image.attached?
 
-    if image.blob.byte_size > 5.megabytes
-      errors.add(:image, t("bulletin.validations.image_size"))
-    end
+    return unless image.blob.byte_size > 5.megabytes
+
+    errors.add(:image, t('bulletin.validations.image_size'))
   end
 end

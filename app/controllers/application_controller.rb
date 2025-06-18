@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include Pundit::Authorization
@@ -26,6 +28,6 @@ class ApplicationController < ActionController::Base
   private
 
   def user_not_authorized
-    redirect_to root_path, alert: "Access denied."
+    redirect_to root_path, alert: 'Access denied.'
   end
 end

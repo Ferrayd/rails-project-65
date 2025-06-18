@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Web
   module Admin
     class CategoriesController < Web::Admin::BaseController
@@ -16,7 +18,7 @@ module Web
         authorize @category
 
         if @category.save
-          redirect_to admin_root_path, notice: t("admin.categories.create.success")
+          redirect_to admin_root_path, notice: t('admin.categories.create.success')
         else
           render :new, status: :unprocessable_entity
         end
@@ -26,7 +28,7 @@ module Web
         @category = Category.find(params[:id])
         authorize @category
         @category.destroy
-        redirect_to admin_root_path, notice: t("admin.categories.destroy.success")
+        redirect_to admin_root_path, notice: t('admin.categories.destroy.success')
       end
 
       def edit
@@ -39,7 +41,7 @@ module Web
         authorize @category
 
         if @category.update(category_params)
-          redirect_to admin_root_path, notice: t("admin.categories.update.success")
+          redirect_to admin_root_path, notice: t('admin.categories.update.success')
         else
           render :edit, status: :unprocessable_entity
         end
