@@ -3,7 +3,7 @@
 require 'faker'
 
 Rails.logger.debug 'Создание категорий...'
-if Category.count.zero?
+if Category.none?
   %w[Авто Недвижимость Электроника].each do |name|
     Category.find_or_create_by!(name: name)
   end
