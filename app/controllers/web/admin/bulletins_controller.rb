@@ -4,8 +4,14 @@ module Web
   module Admin
     class BulletinsController < Web::Admin::BaseController
       def index
-        @q = policy_scope(Bulletin).ransack(params[:q])
-        @bulletins = @q.result.includes(:category, :user).order(created_at: :desc).page(params[:page]).per(10)
+        @q = Bulletin.ransack(params[:q])
+        @bulletins = @q.result.where(state: 'under_moderation').includes(:user, :category).page(params[:page]).per(10)
+      end
+
+      def all
+        @q = Bulletin.ransack(params[:q])
+        @bulletins = @q.result.includes(:user, :category).page(params[:page]).per(10)
+        render :index
       end
 
       def show

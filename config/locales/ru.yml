@@ -70,6 +70,7 @@ ru:
       create:
         success: Категория создана
       destroy:
+        error: Не удалось удалить категорию
         success: Категория удалена
       edit:
         title: Редактировать категорию
@@ -92,9 +93,9 @@ ru:
       bulletins_only: Объявления
       categories: Категории
   application:
+    access_denied: Доступ запрещен
     footer: Доска объявлений
     title: Доска объявлений
-    access_denied: Доступ запрещен
   auth:
     callback:
       success: Вы вошли как %{name}
@@ -120,6 +121,7 @@ ru:
       actions:
         edit: Редактировать
         show: Подробнее
+      ago: назад
       all_categories: Все категории
       category_label: Категория
       in_category: в
@@ -152,6 +154,64 @@ ru:
   categories:
     edit:
       title: Категория
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        few: около %{count} часов
+        many: около %{count} часов
+        one: около часа
+        other: около %{count} часов
+      about_x_months:
+        few: около %{count} месяцев
+        many: около %{count} месяцев
+        one: около месяца
+        other: около %{count} месяцев
+      about_x_years:
+        few: около %{count} лет
+        many: около %{count} лет
+        one: около года
+        other: около %{count} лет
+      almost_x_years:
+        few: почти %{count} года
+        many: почти %{count} лет
+        one: почти год
+        other: почти %{count} лет
+      half_a_minute: полминуты
+      less_than_x_minutes:
+        few: менее %{count} минут
+        many: менее %{count} минут
+        one: менее минуты
+        other: менее %{count} минут
+      less_than_x_seconds:
+        few: менее %{count} секунд
+        many: менее %{count} секунд
+        one: менее секунды
+        other: менее %{count} секунд
+      over_x_years:
+        few: более %{count} лет
+        many: более %{count} лет
+        one: более года
+        other: более %{count} лет
+      x_days:
+        few: "%{count} дня"
+        many: "%{count} дней"
+        one: 1 день
+        other: "%{count} дней"
+      x_minutes:
+        few: "%{count} минуты"
+        many: "%{count} минут"
+        one: 1 минута
+        other: "%{count} минут"
+      x_months:
+        few: "%{count} месяца"
+        many: "%{count} месяцев"
+        one: 1 месяц
+        other: "%{count} месяцев"
+      x_seconds:
+        few: "%{count} секунды"
+        many: "%{count} секунд"
+        one: 1 секунда
+        other: "%{count} секунд"
   nav:
     admin: Админ-панель
     brand: Доска объявлений
@@ -167,6 +227,7 @@ ru:
     show:
       actions:
         archive: Архивировать
+        delete: Вы уверены что хотите архивировать данное объявление?
         show: Подробнее
         to_moderation: На модерацию
       all_states: Все состояния
@@ -181,8 +242,8 @@ ru:
       title: Мои объявления
   simple_form:
     buttons:
-      crt_bul: Создать объявление
       create_category: Сохранить
+      crt_bul: Создать объявление
       upd_bul: Сохранить изменения
       update_cat: Сохранить изменения
     labels:

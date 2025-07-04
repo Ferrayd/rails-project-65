@@ -15,6 +15,8 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
         - if current_user
           li.nav-item
             = link_to t('nav.profile'), profile_path, class: 'nav-link'
+          li.nav-item
+            = link_to t('profiles.show.create_bulletin'), new_bulletin_path, class: 'nav-link'
         - if current_user&.admin?
           li.nav-item
             = link_to t('nav.admin'), admin_root_path, class: 'nav-link'

@@ -23,6 +23,9 @@ Rails.application.routes.draw do
       root to: 'bulletins#index'
       resources :categories, only: %i[index new create edit update destroy]
       resources :bulletins, only: %i[index show] do
+        collection do
+          get :all
+        end
         member do
           patch :publish
           patch :reject

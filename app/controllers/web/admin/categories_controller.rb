@@ -43,8 +43,13 @@ module Web
       def destroy
         @category = Category.find(params[:id])
         authorize @category
-        @category.destroy
-        redirect_to admin_root_path, notice: t('admin.categories.destroy.success')
+        if @category.destroy
+          redirect_to admin_root_path, notice: t('admin.categories.destroy.success')
+        else
+          flash.now[:alert] = t('admin.categories.destroy.error')
+          @categories = Category.all
+          render :index, status: :unprocessable_entity
+        end
       end
 
       private

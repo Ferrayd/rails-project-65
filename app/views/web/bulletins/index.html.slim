@@ -1,48 +1,22 @@
 .container.mt-4
   h1 = t('bulletins.index.title')
-  = simple_form_for @q, url: root_path, html: { class: 'mb-4' }, method: :get do |f|
-    .row.g-3.align-items-end
-      .col-md-6
-        = f.input :title_or_description_cont,
-          label: t('bulletins.index.search_label'),
-          placeholder: t('bulletins.index.search_placeholder'),
-          input_html: { class: 'form-control' },
-          wrapper_html: { class: 'mb-0' },
-          required: false
+  = render 'search_form'
 
-      .col-md-3
-        = f.input :category_id_eq,
-          label: t('bulletins.index.category_label'),
-          collection: Category.all,
-          include_blank: t('bulletins.index.all_categories'),
-          input_html: { class: 'form-select' },
-          wrapper_html: { class: 'mb-0' },
-          required: false
-
-      .col-md-1.d-flex.align-items-end
-        = f.button :submit,
-          t('bulletins.index.search_button'),
-          class: 'btn btn-primary w-100',
-          data: { turbo: false }
-
-      .col-md-1.d-flex.align-items-end
-        = link_to t('bulletins.index.reset_button'),
-          root_path,
-          class: 'btn btn-secondary w-100'
   - if @bulletins.any?
     .row
       - @bulletins.each do |bulletin|
         .col-md-4.mb-3
           .card
-            = image_tag bulletin.image, class: 'card-img-top', style: 'height: 200px; object-fit: cover'
+            = image_tag bulletin.image, class: 'card-img-top', style: 'height: 200px; object-fit: contain'
             .card-body
               h5.card-title = bulletin.title
               p.card-text = truncate(bulletin.description, length: 100)
               p.card-text
                 small.text-muted
-                  = "#{t('bulletins.index.published_by')} #{bulletin.user.name} \
-                    #{t('bulletins.index.in_category')} #{bulletin.category.name} \
-                    (#{t("bulletin.states.#{bulletin.state}")})"
+                  = "#{t('bulletins.index.published_by')} #{bulletin.user.name},
+                    #{t('bulletins.index.in_category')} #{bulletin.category.name}"
+                  p.card-text
+                    = "#{time_ago_in_words(bulletin.created_at)} #{t('bulletins.index.ago')}"
                   - if policy(bulletin).show?
                     = link_to t('bulletins.index.actions.show'), bulletin_path(bulletin), class: 'btn btn-primary'
                   - if policy(bulletin).edit?

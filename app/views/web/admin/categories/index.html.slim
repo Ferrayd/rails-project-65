@@ -25,7 +25,7 @@
                   = button_to t('admin.categories.index.delete'),
                               admin_category_path(category),
                               method: :delete,
-                              data: { turbo: false },
+                              data: { turbo_confirm: t('admin.categories.index.confirm_delete') },
                               class: 'btn btn-outline-danger btn-sm'
       - else
         .alert.alert-info = t('admin.categories.index.no_categories')
