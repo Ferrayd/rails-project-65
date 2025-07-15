@@ -88,6 +88,10 @@ ru:
         title: Создайте категорию
       update:
         success: Категория обновлена
+    confirm:
+      archive: Архивировать обновление?
+      publish: Опубликовать объявление?
+      reject: Отклонить объявление?
     navigation:
       all_bulletins: Все объявления
       bulletins_only: Объявления
