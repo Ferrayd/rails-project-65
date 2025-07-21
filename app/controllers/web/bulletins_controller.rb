@@ -9,7 +9,6 @@ module Web
 
     def show
       @bulletin = Bulletin.find(params[:id])
-      authorize @bulletin
     end
 
     def new
@@ -18,17 +17,11 @@ module Web
     end
 
     def edit
-      @bulletin = current_user.bulletins.find_by(id: params[:id])
-      if @bulletin
-        authorize @bulletin
-      else
-        redirect_to root_path, alert: t('bulletins.not_found')
-      end
+      @bulletin = current_user.bulletins.find(params[:id])
     end
 
     def create
       @bulletin = current_user.bulletins.build(bulletin_params)
-      authorize @bulletin
 
       if @bulletin.save
         redirect_to root_path, notice: t('bulletins.create.success')
@@ -38,47 +31,60 @@ module Web
     end
 
     def to_moderation
-      bulletin = current_user.bulletins.find_by(id: params[:id])
-      if bulletin
-        authorize bulletin, :to_moderation?
-        bulletin.to_moderation!
-        redirect_to profile_path, notice: t('bulletins.to_moderation.success')
+      bulletin = current_user.bulletins.find(params[:id])
+      authorize bulletin, :to_moderation?
+
+      if bulletin.may_to_moderation?
+        perform_moderation_transition(bulletin)
       else
-        redirect_to root_path, alert: t('bulletins.not_found')
+        redirect_to profile_path, alert: t('bulletins.to_moderation.failure')
       end
     end
 
     def archive
-      bulletin = current_user.bulletins.find_by(id: params[:id])
-      if bulletin
-        authorize bulletin, :archive?
-        bulletin.archive!
-        redirect_to profile_path, notice: t('bulletins.archive.success')
-      else
-        redirect_to root_path, alert: t('bulletins.not_found')
-      end
+      bulletin = current_user.bulletins.find(params[:id])
+
+      return redirect_with_failure unless bulletin.may_archive?
+
+      perform_archive_transition(bulletin)
     end
 
     def update
-      @bulletin = current_user.bulletins.find_by(id: params[:id])
-      return redirect_to_root unless @bulletin
+      @bulletin = current_user.bulletins.find(params[:id])
 
-      authorize @bulletin
-      update_bulletin
-    end
-
-    private
-
-    def redirect_to_root
-      redirect_to root_path, alert: t('bulletins.not_found')
-    end
-
-    def update_bulletin
       if @bulletin.update(bulletin_params)
         redirect_to @bulletin, notice: t('bulletins.update.success')
       else
         render :edit, status: :unprocessable_entity
       end
+    end
+
+    private
+
+    def perform_moderation_transition(bulletin)
+      bulletin.to_moderation
+      if bulletin.save
+        redirect_to profile_path, notice: t('bulletins.to_moderation.success')
+      else
+        redirect_to profile_path, alert: t('bulletins.save_error')
+      end
+    end
+
+    def perform_archive_transition(bulletin)
+      bulletin.archive
+      if bulletin.save
+        redirect_to profile_path, notice: t('bulletins.archive.success')
+      else
+        redirect_to profile_path, alert: t('bulletins.save_error')
+      end
+    end
+
+    def redirect_with_failure
+      redirect_to profile_path, alert: t('bulletins.archive.failure')
+    end
+
+    def redirect_to_root
+      redirect_to root_path, alert: t('bulletins.not_found')
     end
 
     def bulletin_params

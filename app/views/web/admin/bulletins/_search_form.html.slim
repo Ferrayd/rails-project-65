@@ -1,34 +1,22 @@
 = simple_form_for @q, url: admin_root_path, method: :get, html: { class: 'mb-4' } do |f|
-  .row.g-3.align-items-end
+  .row.g-3.align-items-center
     .col-md-6
       = f.input :title_or_description_cont,
-                label: t('admin.bulletins.index.search_label'),
-                placeholder: t('admin.bulletins.index.search_placeholder'),
-                input_html: { class: 'form-control' },
-                wrapper_html: { class: 'mb-0' },
                 required: false
-    .col-md-3
+    .col-md-2
       = f.input :state_eq,
-                label: t('admin.bulletins.index.state_label'),
                 collection: Bulletin.aasm.states.map { |s| [t("bulletin.states.#{s.name}"), s.name] },
                 include_blank: t('admin.bulletins.index.all_states'),
-                input_html: { class: 'form-select' },
-                wrapper_html: { class: 'mb-0' },
                 required: false
-    .col-md-3
-      = f.input :category_id_eq,
-                label: t('admin.bulletins.index.category_label'),
-                collection: Category.all,
+    .col-md-2
+     = f.input :category_id_eq,
+                collection: Category.all.map { |s| [s.name] },
                 include_blank: t('admin.bulletins.index.all_categories'),
-                input_html: { class: 'form-select' },
-                wrapper_html: { class: 'mb-0' },
                 required: false
-    .col-md-3
+    .col-md-1
       = f.button :submit,
-                 t('admin.bulletins.index.search_button'),
-                 class: 'btn btn-primary w-100',
-                 data: { turbo: false }
-    .col-md-3
+                 class: 'btn btn-primary w-100'
+    .col-md-1
       = link_to t('admin.bulletins.index.reset_button'),
                 admin_root_path,
                 class: 'btn btn-secondary w-100'

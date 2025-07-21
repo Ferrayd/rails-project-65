@@ -16,17 +16,21 @@
                     "#{bulletin.category.name}"
               .d-flex.gap-2.flex-wrap
                 = link_to t('profiles.show.actions.show'), bulletin_path(bulletin), class: 'btn btn-primary btn-sm'
-                - if policy(bulletin).to_moderation?
-                  = form_with url: to_moderation_bulletin_path(bulletin), method: :patch, local: true do
-                    = submit_tag t('profiles.show.actions.to_moderation'), class: 'btn btn-secondary btn-sm',
-                                 data: { turbo: false }
-                - if policy(bulletin).archive? && bulletin.state != 'archived'
-                  = form_with url: archive_bulletin_path(bulletin), method: :patch, local: true do
-                    = submit_tag t('profiles.show.actions.archive'), class: 'btn btn-danger btn-sm',
-                                 data: { turbo_confirm: t('profiles.show.actions.delete') }
-                - if policy(bulletin).edit?
-                  = link_to t('bulletins.index.actions.edit'), edit_bulletin_path(bulletin),
+                - if bulletin.may_to_moderation?
+                  = link_to t('profiles.show.actions.to_moderation'),
+                            to_moderation_bulletin_path(bulletin),
+                            data: { turbo_method: :patch },
                             class: 'btn btn-secondary btn-sm'
+                - if bulletin.may_archive? && bulletin.state != 'archived' && current_user == bulletin.user
+                  = link_to t('profiles.show.actions.archive'),
+                            archive_bulletin_path(bulletin),
+                            data: { turbo_method: :patch, turbo_confirm: t('profiles.show.actions.delete') },
+                            class: 'btn btn-danger btn-sm'
+                - if current_user == bulletin.user
+                  = link_to t('bulletins.index.actions.edit'),
+                            edit_bulletin_path(bulletin),
+                            class: 'btn btn-secondary btn-sm'
+
     .mt-3
       = paginate @bulletins
   - else

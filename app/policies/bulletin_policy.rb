@@ -1,56 +1,41 @@
 # frozen_string_literal: true
 
 class BulletinPolicy < ApplicationPolicy
-  def index?
-    true
+  def show?
+    record.published? || user_is_owner_or_admin?
   end
 
-  def show?
-    record.published? || (@user && (@user == record.user || @user.admin?))
+  def new?
+    user.present?
   end
 
   def create?
-    @user.present?
+    user.present?
   end
 
   def edit?
-    @user && @user == record.user
+    user_is_owner?
   end
 
   def update?
-    @user && @user == record.user
+    user_is_owner?
   end
 
   def to_moderation?
-    @user && @user == record.user && record.draft?
+    user_is_owner? && record.may_to_moderation?
   end
 
   def archive?
-    @user && (@user == record.user || @user.admin?)
+    user_is_owner? && record.may_archive?
   end
 
-  def publish?
-    @user&.admin? && record.under_moderation?
+  private
+
+  def user_is_owner?
+    user == record.user
   end
 
-  def reject?
-    @user&.admin? && record.under_moderation?
-  end
-
-  class Scope
-    def initialize(user, scope)
-      @user = user
-      @scope = scope
-    end
-
-    def resolve
-      if @user&.admin?
-        @scope.all
-      elsif @user
-        @scope.where(user: @user).or(@scope.where(state: 'published'))
-      else
-        @scope.where(state: 'published')
-      end
-    end
+  def user_is_owner_or_admin?
+    user == record.user || user.admin?
   end
 end

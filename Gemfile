@@ -34,6 +34,7 @@ gem 'tzinfo-data', platforms: %i[windows jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'aasm'
+gem 'active_storage_validations'
 gem 'bootsnap', require: false
 gem 'bootstrap', '~> 5.3.3'
 gem 'faker'

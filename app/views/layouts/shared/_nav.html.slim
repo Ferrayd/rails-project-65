@@ -23,11 +23,12 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
           li.nav-item
             = link_to t('nav.category'), new_admin_category_path, class: 'nav-link'
       ul.navbar-nav
-        - if current_user
-          li.nav-item
-            = form_with url: auth_logout_path('github'), method: :delete, class: 'd-inline', data: { turbo: false } do
-              = submit_tag t('nav.logout'), class: 'nav-link btn btn-link p-0 text-decoration-none'
-        - else
-          li.nav-item
-            = form_with url: auth_request_path('github'), method: :post, class: 'd-inline', data: { turbo: false } do
-              = submit_tag t('nav.login'), class: 'nav-link btn btn-link p-0 text-decoration-none'
+      - if current_user
+        li.nav-item.list-unstyled
+          = link_to t('nav.logout'), auth_logout_path('github'),
+          data: { turbo_method: :delete },
+          class: 'nav-link'
+      - else
+        li.nav-item.list-unstyled
+          = form_with url: auth_request_path('github'), method: :post, class: 'd-inline', data: { turbo: false } do
+            = submit_tag t('nav.login'), class: 'nav-link'

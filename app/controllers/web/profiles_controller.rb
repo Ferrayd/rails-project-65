@@ -6,13 +6,7 @@ module Web
 
     def show
       @q = current_user.bulletins.ransack(params[:q])
-      @bulletins = @q.result.includes(:category, :user).order(created_at: :desc).page(params[:page]).per(10)
-    end
-
-    private
-
-    def authenticate_user!
-      redirect_to root_path, alert: t('profiles.authenticate.alert') unless current_user
+      @bulletins = @q.result.includes(:category).order(created_at: :desc).page(params[:page]).per(10)
     end
   end
 end

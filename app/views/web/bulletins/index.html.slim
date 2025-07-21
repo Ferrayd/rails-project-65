@@ -19,9 +19,6 @@
                     = "#{time_ago_in_words(bulletin.created_at)} #{t('bulletins.index.ago')}"
                   - if policy(bulletin).show?
                     = link_to t('bulletins.index.actions.show'), bulletin_path(bulletin), class: 'btn btn-primary'
-                  - if policy(bulletin).edit?
-                    = link_to t('bulletins.index.actions.edit'), edit_bulletin_path(bulletin),
-                    class: 'btn btn-secondary ms-2'
     = paginate @bulletins
   - else
     .alert.alert-info = t('bulletins.index.no_bulletins')

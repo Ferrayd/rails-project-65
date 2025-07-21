@@ -3,7 +3,7 @@ ru:
   activerecord:
     attributes:
       bulletin:
-        category_id: Категория
+        category: Категория
         description: Описание
         image: Изображение
         title: Заголовок
@@ -14,7 +14,7 @@ ru:
         category:
           attributes:
             name:
-              blank: Название не может быть пустым
+              blank: не может быть пустым
     models:
       bulletin: Объявления
       category: Категория
@@ -28,8 +28,8 @@ ru:
           publish: Опубликовать
           reject: Отклонить
           show: Подробнее
-        all_categories: Все категории
-        all_states: Все состояния
+        all_categories: Категория
+        all_states: Статус объявления
         category_label: Категория
         no_bulletins: Объявления не найдены
         reset_button: Сброс
@@ -216,6 +216,18 @@ ru:
         many: "%{count} секунд"
         one: 1 секунда
         other: "%{count} секунд"
+  helpers:
+    select:
+      prompt: Выберите из списка категорию
+    submit:
+      bulletin:
+        create: Создать объявление
+        update: Обновить объявление
+      category:
+        create: Создать категорию
+        update: Обновить категорию
+      q:
+        create: Искать
   nav:
     admin: Админ-панель
     brand: Доска объявлений
@@ -234,7 +246,7 @@ ru:
         delete: Вы уверены что хотите архивировать данное объявление?
         show: Подробнее
         to_moderation: На модерацию
-      all_states: Все состояния
+      all_states: Статус объявления
       create_bulletin: Создать объявление
       in_category: в
       no_bulletins: Объявления не найдены
@@ -245,24 +257,37 @@ ru:
       state_label: Состояние
       title: Мои объявления
   simple_form:
-    buttons:
-      create_category: Сохранить
-      crt_bul: Создать объявление
-      upd_bul: Сохранить изменения
-      update_cat: Сохранить изменения
+    hints:
+      bulletin:
+        image: Прикрепите изображение JPG или PNG до 5 МБ
+      defaults:
+        category: Выберите категорию
+        description: Описание должно быть не более 1000 символов
+        title: Название должно быть не более 50 символов
+      q:
+        category_id_eq: Выберите категорию
+        state_eq: Выберите статус
+        title_or_description_cont: Можно искать по части слова
     labels:
       bulletin:
-        category_id: Категория
-        description: Описание объявления
+        category: Категория
+        description: Описание
         image: Изображение
-        title: Заголовок объявления
+        title: Название
       category:
         name: Название категории
+      q:
+        category_id_eq: Все категории
+        state_eq: Статус
+        title_or_description_cont: Название или описание
     placeholders:
       bulletin:
-        category_id: Выберите категорию
         description: Введите описание
-        title: Введите заголовок
+        title: Введите название
+      q:
+        title_or_description_cont: Введите заголовок или описание
+    required:
+      text: Обязательно для заполнения
   views:
     pagination:
       first: Первая

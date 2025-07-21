@@ -32,19 +32,19 @@
                   td = t("bulletin.states.#{bulletin.state}")
                   td.d-flex.gap-2.flex-wrap
                     = link_to t('admin.bulletins.index.actions.show'), admin_bulletin_path(bulletin),
-                     class: 'btn btn-info btn-sm'
-                    - if policy(bulletin).publish?
+                      class: 'btn btn-info btn-sm'
+                    - if current_user.admin? && bulletin.may_publish?
                       = button_to t('admin.bulletins.show.actions.publish'), [:publish, :admin, bulletin],
-                      method: :patch, class: 'btn btn-success btn-sm',
-                      data: { turbo_confirm: t('admin.confirm.publish') }
-                    - if policy(bulletin).reject?
+                        method: :patch, class: 'btn btn-success btn-sm',
+                        data: { turbo_confirm: t('admin.confirm.publish') }
+                    - if current_user.admin? && bulletin.may_reject?
                       = button_to t('admin.bulletins.show.actions.reject'), [:reject, :admin, bulletin],
-                      method: :patch, class: 'btn btn-warning btn-sm',
-                      data: { turbo_confirm: t('admin.confirm.reject') }
-                    - if policy(bulletin).archive? && bulletin.state != 'archived'
+                        method: :patch, class: 'btn btn-warning btn-sm',
+                        data: { turbo_confirm: t('admin.confirm.reject') }
+                    - if current_user.admin? && bulletin.may_archive? && bulletin.state != 'archived'
                       = button_to t('admin.bulletins.show.actions.archive'), [:archive, :admin, bulletin],
-                      method: :patch, class: 'btn btn-secondary btn-sm',
-                      data: { turbo_confirm: t('admin.confirm.archive') }
+                        method: :patch, class: 'btn btn-secondary btn-sm',
+                        data: { turbo_confirm: t('admin.confirm.archive') }
         .mt-3
           = paginate @bulletins
       - else

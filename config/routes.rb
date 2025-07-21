@@ -9,13 +9,10 @@ Rails.application.routes.draw do
     root 'bulletins#index'
 
     resource :profile, only: :show
-    resources :bulletins do
+    resources :bulletins, except: [:destroy] do
       member do
-        patch :publish
         patch :to_moderation
         patch :archive
-        get :edit
-        patch :update
       end
     end
 
