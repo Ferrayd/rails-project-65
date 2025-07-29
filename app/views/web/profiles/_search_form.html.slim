@@ -3,7 +3,7 @@
     .card-header
       h1.mb-0 = t('profiles.show.title')
     .card-body
-      = simple_form_for @q, url: profile_path, method: :get, html: { class: 'mb-4' } do |f|
+      = simple_form_for q, url: profile_path, method: :get, html: { class: 'mb-4' } do |f|
         .row.g-3.align-items-center
           .col-md-6
             = f.input :title_or_description_cont,

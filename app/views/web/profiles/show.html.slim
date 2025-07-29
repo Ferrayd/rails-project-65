@@ -1,5 +1,5 @@
 .container.mt-4
-  = render 'search_form'
+  = render 'search_form', q: @q
 
   - if @bulletins.any?
     .row.g-3

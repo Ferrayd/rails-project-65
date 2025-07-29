@@ -1,5 +1,5 @@
 .container.mt-4
-  = simple_form_for @q, url: root_path, method: :get, html: { class: 'mb-4' } do |f|
+  = simple_form_for q, url: root_path, method: :get, html: { class: 'mb-4' } do |f|
     .row.g-3.align-items-center
       .col-md-6
         = f.input :title_or_description_cont,

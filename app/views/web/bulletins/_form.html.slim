@@ -4,10 +4,10 @@
       .card.shadow-sm
         .card-body
           h1.card-title.text-center.mb-4
-            = @bulletin.new_record? ? t('bulletins.new.title') : t('bulletins.edit.title')
-            - if @bulletin.persisted?
-                = image_tag @bulletin.image, class: 'card-img-top', style: 'height: 200px; object-fit: contain'
-          = simple_form_for @bulletin, local: true do |f|
+            = bulletin.new_record? ? t('bulletins.new.title') : t('bulletins.edit.title')
+            - if bulletin.persisted?
+                = image_tag bulletin.image, class: 'card-img-top', style: 'height: 200px; object-fit: contain'
+          = simple_form_for bulletin, local: true do |f|
             = f.input :title
             = f.input :description, as: :text
             = f.association :category, required: true, prompt: true

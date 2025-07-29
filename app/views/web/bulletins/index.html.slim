@@ -1,6 +1,6 @@
 .container.mt-4
   h1 = t('bulletins.index.title')
-  = render 'search_form'
+  = render 'search_form', q: @q
 
   - if @bulletins.any?
     .row

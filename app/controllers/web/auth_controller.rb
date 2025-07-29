@@ -2,10 +2,6 @@
 
 module Web
   class AuthController < ApplicationController
-    def redirect_to_provider
-      redirect_to "/auth/#{params[:provider]}"
-    end
-
     def callback
       auth = request.env['omniauth.auth']
       user = User.find_or_initialize_by(email: auth.info.email.downcase)

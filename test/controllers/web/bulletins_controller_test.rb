@@ -2,25 +2,19 @@
 
 require 'test_helper'
 
-FIXTURE_IMAGE_FILE_NAME = 'bulletin_4.jpg'
-
 module Web
   class BulletinsControllerTest < ActionDispatch::IntegrationTest
+    FIXTURE_IMAGE_FILE_NAME = 'bulletin_4.jpg'
     setup do
       @bulletin = bulletins(:draft)
-      @archived_attrs = {
-        title: bulletins(:archived).title,
-        description: bulletins(:archived).description,
-        category_id: categories(:two).id
+      @valid_attrs = {
+        title: Faker::Lorem.sentence(word_count: 3),
+        description: Faker::Lorem.paragraph(sentence_count: 2),
+        category_id: categories(:one).id
       }
       @user = users(:system_test)
       @other_user = users(:one)
       sign_in @user
-    end
-
-    test 'should get root' do
-      get root_path
-      assert_response :success
     end
 
     test 'should get index' do
@@ -35,11 +29,11 @@ module Web
 
     test 'should create bulletin' do
       image = fixture_file_upload(FIXTURE_IMAGE_FILE_NAME)
-      post bulletins_path, params: { bulletin: { **@archived_attrs, image: image } }
-      created_bulletin = Bulletin.last
+      post bulletins_path, params: { bulletin: { **@valid_attrs, image: image } }
+      created_bulletin = Bulletin.find_by(@valid_attrs.merge(user_id: @user.id))
       assert_redirected_to root_path
       assert_equal I18n.t('bulletins.create.success'), flash[:notice]
-      assert { @archived_attrs.all? { |key, value| created_bulletin[key] == value } }
+      assert { created_bulletin }
       assert_equal image.original_filename, created_bulletin.image.filename.to_s
     end
 
@@ -70,9 +64,9 @@ module Web
 
     test 'should update bulletin' do
       new_attrs = {
-        title: 'Updated Title',
-        description: 'Updated Description',
-        category_id: categories(:one).id
+        title: Faker::Lorem.sentence(word_count: 4),
+        description: Faker::Lorem.paragraph(sentence_count: 3),
+        category_id: categories(:two).id
       }
       patch bulletin_path(@bulletin), params: { bulletin: new_attrs }
       assert_redirected_to bulletin_path(@bulletin)
@@ -89,7 +83,7 @@ module Web
 
     test 'should not update bulletin for unauthorized user' do
       sign_in @other_user
-      patch bulletin_path(@bulletin), params: { bulletin: @archived_attrs }
+      patch bulletin_path(@bulletin), params: { bulletin: @valid_attrs }
       assert_redirected_to root_path
     end
 

@@ -22,11 +22,11 @@ class BulletinPolicy < ApplicationPolicy
   end
 
   def to_moderation?
-    user_is_owner? && record.may_to_moderation?
+    user_is_owner?
   end
 
   def archive?
-    user_is_owner? && record.may_archive?
+    user_is_owner?
   end
 
   private
