@@ -3,6 +3,7 @@
 module Web
   class ApplicationController < ApplicationController
     include Pundit::Authorization
+
     helper_method :current_user, :signed_in?
 
     rescue_from ActiveRecord::RecordNotFound do
