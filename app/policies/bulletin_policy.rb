@@ -5,14 +5,6 @@ class BulletinPolicy < ApplicationPolicy
     record.published? || user_is_owner_or_admin?
   end
 
-  def new?
-    user.present?
-  end
-
-  def create?
-    user.present?
-  end
-
   def edit?
     user_is_owner?
   end

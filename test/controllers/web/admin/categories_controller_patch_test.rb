@@ -9,17 +9,16 @@ module Web
         @admin = users(:admin)
         @non_admin = users(:one)
         @category = categories(:one)
-        @category_attrs = { name: 'Новая категория' }
+        @category_attrs = { name: Faker::Lorem.word.capitalize }
       end
 
       test 'admin should update category' do
         sign_in @admin
-        new_attrs = { name: Faker::Lorem.word.capitalize }
-        patch admin_category_path(@category), params: { category: new_attrs }
+        patch admin_category_path(@category), params: { category: @category_attrs }
         assert_redirected_to admin_root_path
         assert_flash 'admin.categories.update.success'
         @category.reload
-        assert_equal new_attrs[:name], @category.name
+        assert_equal @category_attrs[:name], @category.name
       end
 
       test 'non-admin should not update category' do

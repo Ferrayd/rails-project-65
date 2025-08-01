@@ -9,14 +9,13 @@ module Web
         @admin = users(:admin)
         @non_admin = users(:one)
         @category = categories(:one)
+        @deletable_category = categories(:without_bulletins)
       end
 
       test 'admin should destroy category' do
         sign_in @admin
-        # Create a category without associated bulletins for deletion test
-        deletable_category = Category.create!(name: 'Deletable Category')
         assert_difference('Category.count', -1) do
-          delete admin_category_path(deletable_category)
+          delete admin_category_path(@deletable_category)
         end
         assert_redirected_to admin_root_path
         assert_flash 'admin.categories.destroy.success'

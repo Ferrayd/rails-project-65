@@ -2,6 +2,8 @@
 
 module Web
   class BulletinsController < Web::ApplicationController
+    before_action :authenticate_user!, except: %i[index show]
+
     def index
       @q = Bulletin.published.ransack(params[:q])
       @bulletins = @q.result.includes(:category, :user).order(created_at: :desc).page(params[:page]).per(9)
@@ -9,15 +11,16 @@ module Web
 
     def show
       @bulletin = Bulletin.find(params[:id])
+      authorize @bulletin
     end
 
     def new
       @bulletin = Bulletin.new
-      authorize @bulletin
     end
 
     def edit
       @bulletin = current_user.bulletins.find(params[:id])
+      authorize @bulletin
     end
 
     def create
@@ -32,7 +35,7 @@ module Web
 
     def to_moderation
       bulletin = current_user.bulletins.find(params[:id])
-      authorize bulletin, :to_moderation?
+      authorize bulletin
 
       if bulletin.may_to_moderation?
         perform_moderation_transition(bulletin)
@@ -43,6 +46,7 @@ module Web
 
     def archive
       bulletin = current_user.bulletins.find(params[:id])
+      authorize bulletin
 
       return redirect_with_failure unless bulletin.may_archive?
 
@@ -51,6 +55,7 @@ module Web
 
     def update
       @bulletin = current_user.bulletins.find(params[:id])
+      authorize @bulletin
 
       if @bulletin.update(bulletin_params)
         redirect_to @bulletin, notice: t('bulletins.update.success')
@@ -81,10 +86,6 @@ module Web
 
     def redirect_with_failure
       redirect_to profile_path, alert: t('bulletins.archive.failure')
-    end
-
-    def redirect_to_root
-      redirect_to root_path, alert: t('bulletins.not_found')
     end
 
     def bulletin_params
